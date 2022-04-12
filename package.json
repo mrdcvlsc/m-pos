@@ -1,5 +1,5 @@
 {
-  "name": "mpos",
+  "name": "m-pos",
   "version": "1.0.0",
   "description": "a minimal point of sale system for laptop, desktop and to some extent mobile phones",
   "main": "mpos.js",
