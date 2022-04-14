@@ -95,7 +95,22 @@ img {
   }
 }
 
+@media (max-height: 400px) {
+  h2{
+    display: none;
+  }
+  
+  .menu-button {
+    height: 40vh;;
+  }
+}
+
 @media (max-width: 600px) {
+
+  h2{
+    margin: 0;
+  }
+
   .main {
     display:flex;
     justify-content: center;
@@ -106,6 +121,6 @@ img {
 
   .menu-button {
     width: 90vw;
-    height: 20vh;
+    height: 22vh;
   }
 }
