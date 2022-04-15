@@ -1,0 +1,40 @@
+{
+    "headings" : [
+        "Products",
+        "Class",
+        "Price",
+        "Quantity"
+    ],
+    "data": [
+        [
+            "Blue-Shirt",
+            "Clothing",
+            400,
+            60
+        ],
+        [
+            "Black-Shirt",
+            "Clothing",
+            400,
+            34
+        ],
+        [
+            "White-Shirt",
+            "Clothing",
+            400,
+            76
+        ],
+        [
+            "Blue-Denim Jeans",
+            "Clothing",
+            677,
+            12
+        ],
+        [
+            "Tik-Tok Shorts",
+            "Clothing",
+            150,
+            55
+        ]
+    ]
+}

@@ -1,0 +1,91 @@
+/* *{
+  outline: 1px solid red;
+} */
+
+.main {
+  height: 100%;
+  width: 100%;
+  padding: 1em;
+  
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 0.25fr;
+  grid-template-areas:
+      "table table table table table buttons"
+      "table table table table table buttons"
+      "table table table table table buttons"
+      "stats stats stats stats stats buttons";
+  gap: 1rem; /* gap for each elements in grid - kinda like margins*/
+}
+
+.table-container {
+  grid-area: table;
+  border: thin rgb(99, 49, 75) solid;
+
+  background-color: rgb(241, 241, 241);
+  overflow: auto;
+
+  border-radius: 0.7em 0.7em 0.7em 0.7em;
+}
+
+table{
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+}
+
+tbody tr:nth-child(2n){
+  background-color: rgb(167, 252, 156);
+  font-weight: thin;
+}
+
+th{
+  position: sticky;
+  top: 0;
+
+  background: rgb(228, 28, 138);
+  color: white;
+}
+
+th, td{
+  text-align: center;
+  height: 1.7em;
+}
+
+.info {
+  grid-area: stats;
+  display: flex;
+  background-color: transparent;
+  justify-content: left;
+}
+
+input{
+  outline: none;
+  border: 0px;
+  background-color: rgba(255, 255, 255, 0);
+}
+.canvas-container{
+  width: 100%;
+}
+
+.button-container {
+  grid-area: buttons;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.add{
+  background-image: linear-gradient(45deg, rgb(72, 38, 192), rgb(39, 20, 110));
+  border: 0.2em solid rgb(38, 6, 75);
+}
+
+.edit{
+  background-image: linear-gradient(45deg, rgb(180, 0, 69), rgb(153, 9, 110));
+  border: 0.2em solid rgb(128, 3, 45);
+}
+
+.delete{
+  background-image: linear-gradient(45deg, rgb(0, 117, 10), rgb(3, 175, 32));
+  border: 0.2em solid rgb(14, 71, 3);
+}

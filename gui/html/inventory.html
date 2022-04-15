@@ -4,12 +4,52 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
   <link rel="stylesheet" href="../css/globals.css">
   <link rel="stylesheet" href="../css/text.css">
   <link rel="stylesheet" href="../css/inventory.css">
+
+  <script src="../../package/dist/chart.js"></script>
+  <script type="module" src="../js/inventory.js" defer></script>
+
   <title>M.POS - Inventory</title>
 </head>
 <body>
-  
+  <div class="main">
+    <div class="table-container">
+      <table>
+        <thead></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="info">
+      
+      <!-- <div class="canvas-container">
+        <canvas id="cost" height="100"></canvas>
+      </div> -->
+      <div>
+        <p><label>Total Inventory Cost : </label><input id="total-cost" type="text" readonly></p>
+        <p><label>Total Quantity : </label><input id="total-quantity" type="text" readonly></p>
+      </div>
+    </div>
+    <div class="button-container">
+      <div class="goback">
+        <h2>Go Back</h2>
+      </div>
+
+      <div class="gui-button add">
+        <h2>Add</h2>
+      </div>
+      <div class="gui-button edit">
+        <h2>Edit</h2>
+      </div>
+      <div class="gui-button delete">
+        <h2>Delete</h2>
+      </div>
+      <div class="canvas-container">
+        <canvas id="quantity" height="100"></canvas>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

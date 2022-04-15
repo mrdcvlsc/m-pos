@@ -1,0 +1,34 @@
+{
+    "headings" : [
+        "Products",
+        "Class",
+        "Price",
+        "Quantity"
+    ],
+    "data": [
+        ["Blue-Shirt","Clothing",410,60],
+        ["Black-Shirt","Clothing",390,34],
+        ["White-Shirt","Clothing",400,76],
+        ["Red-Shirt","Clothing",410,60],
+        ["Yello-Shirt","Clothing",390,34],
+        ["Orange-Shirt","Clothing",400,76],
+        ["Blue-Denim Jeans","Clothing",677,12],
+        ["Black-Denim Jeans","Clothing",407,34],
+        ["White-Denim Jeans","Clothing",205,44],
+        ["Red-Denim Jeans","Clothing",800,72],
+        ["Tik-Tok Shorts Blue","Clothing",150,19],
+        ["Tik-Tok Shorts Black","Clothing",111,86],
+        ["Tik-Tok Shorts Yello","Clothing",32,12],
+        ["Tik-Tok Shorts Red","Clothing",568,35],
+        ["Over-size Shirt Green","Clothing",568,35],
+        ["Over-size Shirt Red","Clothing",865,7],
+        ["Over-size Shirt Black","Clothing",665,12],
+        ["Over-size Shirt White","Clothing",658,88],
+        ["Over-size Shirt Yellow","Clothing",856,43],
+        ["Frill Skirt Goth Black","Clothing",999,33],
+        ["Frill Skirt Forest Green","Clothing",999,23],
+        ["Frill Skirt Academia Violet","Clothing",999,85],
+        ["Frill Skirt Dandelaion Yellow","Clothing",999,99],
+        ["Frill Skirt Nocturnal Blue","Clothing",999,23]
+    ]
+}

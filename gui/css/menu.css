@@ -6,44 +6,13 @@
   gap: 2em;
 }
 
-.menu-button{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  text-align: center;
-
-  border-radius: 0.5em 0.5em 0.5em 0.5em;
-  
-  padding: 2em 1em;
-  /* margin: 0px 1em; */
-
-  /* box shadow : start */
-  -webkit-box-shadow: 0.2em 0.2em 0.1em rgba(0, 0, 0, 0.247);
-  -moz-box-shadow: 0.2em 0.2em 0.1em rgba(0, 0, 0, 0.247);
-  -ms-box-shadow: 0.2em 0.2em 0.1em rgba(0, 0, 0, 0.247);
-  -o-box-shadow: 0.2em 0.2em 0.1em rgba(0, 0, 0, 0.247);
-  box-shadow: 0.2em 0.2em 0.1em rgba(0, 0, 0, 0.247);
-  /* box shadow : end */
-
-  transition: ease 0.2s;
-
+.gui-button {
   width: 29vw;
   height: 40vh;
   max-width: 600px;
 }
-
-.menu-button > h2 {
+.gui-button > h2 {
   margin: 0.8em 0px;
-}
-
-.menu-button:hover {
-  transform: scale(1.05);
-  -webkit-box-shadow: 0.4em 0.4em 0.2em rgba(0, 0, 0, 0.096), 0.2em 0.2em 0.2em rgba(0, 0, 0, 0.247);
-  -moz-box-shadow: 0.4em 0.4em 0.2em rgba(0, 0, 0, 0.096), 0.2em 0.2em 0.2em rgba(0, 0, 0, 0.247);
-  -ms-box-shadow: 0.4em 0.4em 0.2em rgba(0, 0, 0, 0.096), 0.2em 0.2em 0.2em rgba(0, 0, 0, 0.247);
-  -o-box-shadow: 0.4em 0.4em 0.2em rgba(0, 0, 0, 0.096), 0.2em 0.2em 0.2em rgba(0, 0, 0, 0.247);
-  box-shadow: 0.4em 0.4em 0.2em rgba(0, 0, 0, 0.096), 0.2em 0.2em 0.2em rgba(0, 0, 0, 0.247);
 }
 
 .inventory{
@@ -78,7 +47,7 @@ img {
 }
 
 @media (max-height: 600px) {
-  .menu-button {
+  .gui-button {
     height: 30vh;;
   }
 }
@@ -88,7 +57,7 @@ img {
     display: none;
   }
   
-  .menu-button {
+  .gui-button {
     height: 40vh;;
   }
 }
@@ -107,7 +76,7 @@ img {
     gap: 1em;
   }
 
-  .menu-button {
+  .gui-button {
     width: 90vw;
     height: 22vh;
   }
