@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="../css/text.css">
   <link rel="stylesheet" href="../css/inventory.css">
 
-  <script src="../../package/dist/chart.js"></script>
+  <script src="../js/chart.js"></script>
   <script type="module" src="../js/inventory.js" defer></script>
 
   <title>M.POS - Inventory</title>
@@ -23,10 +23,6 @@
       </table>
     </div>
     <div class="info">
-      
-      <!-- <div class="canvas-container">
-        <canvas id="cost" height="100"></canvas>
-      </div> -->
       <div>
         <p><label>Total Inventory Cost : </label><input id="total-cost" type="text" readonly></p>
         <p><label>Total Quantity : </label><input id="total-quantity" type="text" readonly></p>
@@ -47,7 +43,7 @@
         <h2>Delete</h2>
       </div>
       <div class="canvas-container">
-        <canvas id="quantity" height="100"></canvas>
+        <canvas id="quantity" width="100%" height="100%"></canvas>
       </div>
     </div>
   </div>
