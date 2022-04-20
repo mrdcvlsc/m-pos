@@ -69,7 +69,6 @@ const InventoryDB = {
     };
     try {
       for(let row of retreiveStatement.iterate()) {
-        console.log(row);
         tableRows.data.push([row.itemname,row.class,row.price,row.quantity]);
       }
     }

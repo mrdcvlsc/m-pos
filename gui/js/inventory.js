@@ -8,7 +8,6 @@ const QUANTITY = 3;
 // INITIAL LOADS
 let response = await fetch("/data/inventory");
 let { data } = await response.json();
-console.log('data = ', data);
 
 PopulateTable(document.querySelector("table"),['Products','Class','Price','Quantity'],data);
 
@@ -24,12 +23,10 @@ async function DisplayStats(CostOutput, QuantityOutput, data=null) {
   let QuantitySum ='0x';
 
   if(data) {
-    console.log(data);
     CostSum = 0.0;
     QuantitySum = 0;
 
     for(let i=0; i<data.length; ++i) {
-      console.log(data[i])
       CostSum += data[i][PRICE] * data[i][QUANTITY];
       QuantitySum += data[i][QUANTITY];
     }
