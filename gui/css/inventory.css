@@ -73,17 +73,17 @@ input{
   gap: 1em;
 }
 
-.add{
+.add, .edit-box > h2{
   background-image: linear-gradient(45deg, rgb(72, 38, 192), rgb(39, 20, 110));
   border: 0.2em solid rgb(38, 6, 75);
 }
 
-.edit{
+.edit, .delete-box > h2, .popup > div > div > .cancle{
   background-image: linear-gradient(45deg, rgb(180, 0, 69), rgb(153, 9, 110));
   border: 0.2em solid rgb(128, 3, 45);
 }
 
-.delete{
+.delete,  .add-box > h2, .popup > div > div > .confirm{
   background-image: linear-gradient(45deg, rgb(0, 117, 10), rgb(3, 175, 32));
   border: 0.2em solid rgb(14, 71, 3);
 }
@@ -91,4 +91,59 @@ input{
 .canvas-container{
   height: 100% !important;
   position: relative;
+}
+
+/* Popup Window Boxes */
+.popup-container{
+  position: fixed;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  gap: 1em;
+  padding: 1em;
+
+  background-image: linear-gradient(65deg, rgba(57, 255, 205, 0.795),rgba(22, 153, 240, 0.74));
+}
+
+.popup{
+  gap: 2em;
+  border: thin solid black;
+  width: clamp(100px,80vw,600px);
+  border-radius: .7em;
+  padding: 1em 0px;
+  background-color: rgba(255, 230, 0, 0.644);
+}
+
+.popup > h2 {
+  color: white;
+  background-color: blue;
+  padding: 0px .5em;
+}
+
+.pop-fields{
+  display: flex;
+  flex-direction: column;
+  gap: 1.2em;
+  width: 100%;
+  padding: 1.3em;
+}
+
+.popup > div > input {
+  height: 2em;
+  background-color: white;
+  padding: 0px 2em;
+}
+
+.popup > div > div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.popup > div > div > div {
+  width: 48%;
+  text-align: center;
+  color: white;
+  padding: .2em;
 }
