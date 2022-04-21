@@ -9,7 +9,7 @@ fastify.register(fastifyStatic, {
   root: path.join(__dirname, 'gui')
 });
 
-fastify.register(require('./api/database'));
+fastify.register(require('./api/inventory'));
 fastify.register(require('./routes/gui'));
 
 const start = async () => {

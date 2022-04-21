@@ -1,29 +1,93 @@
-const fs = require('fs');
-const db = require('better-sqlite3')('./data/inventory.db');
-const { InventoryDB, ErrorHandler } = require('./inventory-db');
-
-let insertStatement, updateStatement, deleteStatement, readStatement;
-
-try {
-  InventoryDB.initialize(db,'inventory');
-  insertStatement = db.prepare(InventoryDB.StmTemp.INSERT);
-  updateStatement = db.prepare(InventoryDB.StmTemp.UPDATE);
-  deleteStatement = db.prepare(InventoryDB.StmTemp.DELETE);
-  readStatement = db.prepare(InventoryDB.StmTemp.READ);
-}
-catch(err) {
-  ErrorHandler(err, 'Initial');
+function ErrorHandler(err, sqlCommand) {
+  console.error(
+    `\nERROR : [${sqlCommand}]
+      message : ${err.message},
+      code    : ${err.code}\n`
+  );
 }
 
-async function api(fastify, options) {
+const InventoryDB = {
+  /// statement templates
+  StmTemp : {
+    INSERT : `INSERT INTO inventory (itemname, class, price, quantity) VALUES (?, ?, ?, ?)`,
+    READ : `SELECT * FROM inventory`,
+    DELETE : `DELETE FROM inventory WHERE itemname = ?`,
+    UPDATE : `UPDATE inventory SET itemname = ?, class = ?, price = ?, quantity = ? WHERE itemname = ?`
+  },
 
-  fastify.get('/data/inventory',(req,rep) => {
-    rep.send(InventoryDB.retrieveRows(readStatement));
-  });
+  initialize : function(db, inventoryName) {
+    try{
+      db.exec(`
+        CREATE TABLE ${inventoryName} (
+          itemname TEXT PRIMARY KEY NOT NULL,
+          class TEXT NOT NULL,
+          price REAL NOT NULL,
+          quantity INTEGER NOT NULL
+        )`
+      );
+    }
+    catch(err) {
+      ErrorHandler(err,'initialize');
+      return false;
+    }
+    return true;
+  },
 
-  fastify.post('/data/inventory', (req,rep) => {
+  insertRow : function(insertStatement, Product, Class, Price, Quantity) {
+    try {
+      insertStatement.run(Product, Class, Price, Quantity);
+    }
+    catch(err) {
+      ErrorHandler(err,'insertRow');
+    }
+    return insertStatement.changes;
+  },
 
-  });
+  updateRow : function(editStatement, NewProduct, NewClass, NewPrice, NewQuantity, Product) {
+    try {
+      editStatement.run(NewProduct, NewClass, NewPrice, NewQuantity, Product);
+    }
+    catch(err) {
+      ErrorHandler(err,'updateRow');
+    }
+    return editStatement.changes;
+  },
+
+  deleteRow : function(deleteStatement, Product) {
+    try {
+      deleteStatement.run(Product);
+    }
+    catch(err) {
+      ErrorHandler(err,'deleteRow');
+    }
+    return deleteStatement.changes;
+  },
+
+  retrieveRows : function(retreiveStatement) {
+    let tableRows = {
+      data:[]
+    };
+    try {
+      for(let row of retreiveStatement.iterate()) {
+        tableRows.data.push([row.itemname,row.class,row.price,row.quantity]);
+      }
+    }
+    catch(err) {
+      ErrorHandler(err,'retrieveRows');
+    }
+    return tableRows;
+  },
+
+  drop : function(db) {
+    try {
+      db.exec(`DROP TABLE inventory`);
+    }
+    catch(err) {
+      ErrorHandler(err,'drop');
+      return false;
+    }
+    return true;
+  }
 }
 
-module.exports = api;
+module.exports = { InventoryDB, ErrorHandler };
