@@ -20,6 +20,10 @@ async function api(fastify, options) {
   fastify.get('/data/inventory',(req,rep) => {
     rep.send(InventoryDB.retrieveRows(readStatement));
   });
+
+  fastify.post('/data/inventory', (req,rep) => {
+
+  });
 }
 
 module.exports = api;

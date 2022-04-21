@@ -73,17 +73,17 @@ input{
   gap: 1em;
 }
 
-.add, .edit-box > h2{
+.edit, .edit-box > h2{
   background-image: linear-gradient(45deg, rgb(72, 38, 192), rgb(39, 20, 110));
   border: 0.2em solid rgb(38, 6, 75);
 }
 
-.edit, .delete-box > h2, .popup > div > div > .cancle{
+.delete, .delete-box > h2, .popup > div > div > .cancle{
   background-image: linear-gradient(45deg, rgb(180, 0, 69), rgb(153, 9, 110));
   border: 0.2em solid rgb(128, 3, 45);
 }
 
-.delete,  .add-box > h2, .popup > div > div > .confirm{
+.add, .add-box > h2, .popup > div > div > .confirm{
   background-image: linear-gradient(45deg, rgb(0, 117, 10), rgb(3, 175, 32));
   border: 0.2em solid rgb(14, 71, 3);
 }
@@ -108,6 +108,7 @@ input{
 }
 
 .popup{
+  display: none;
   gap: 2em;
   border: thin solid black;
   width: clamp(100px,80vw,600px);
