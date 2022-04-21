@@ -34,33 +34,39 @@ const InventoryDB = {
   },
 
   insertRow : function(insertStatement, Product, Class, Price, Quantity) {
+    let result;
     try {
-      insertStatement.run(Product, Class, Price, Quantity);
+      result = insertStatement.run(Product, Class, Price, Quantity);
     }
     catch(err) {
       ErrorHandler(err,'insertRow');
+      return { changes: 0 };
     }
-    return insertStatement.changes;
+    return { changes: result.changes };
   },
 
   updateRow : function(editStatement, NewProduct, NewClass, NewPrice, NewQuantity, Product) {
+    let result;
     try {
-      editStatement.run(NewProduct, NewClass, NewPrice, NewQuantity, Product);
+      result = editStatement.run(NewProduct, NewClass, NewPrice, NewQuantity, Product);
     }
     catch(err) {
       ErrorHandler(err,'updateRow');
+      return { changes: 0 };
     }
-    return editStatement.changes;
+    return { changes: result.changes };
   },
 
   deleteRow : function(deleteStatement, Product) {
+    let result;
     try {
-      deleteStatement.run(Product);
+      result = deleteStatement.run(Product);
     }
     catch(err) {
       ErrorHandler(err,'deleteRow');
+      return { changes: 0 };
     }
-    return deleteStatement.changes;
+    return { changes: result.changes };
   },
 
   retrieveRows : function(retreiveStatement) {
@@ -69,13 +75,18 @@ const InventoryDB = {
     };
     try {
       for(let row of retreiveStatement.iterate()) {
-        tableRows.data.push([row.itemname,row.class,row.price,row.quantity]);
+        tableRows.data.push({
+          itemname: row.itemname,
+          class: row.class,
+          price: row.price,
+          quantity: row.quantity
+        });
       }
     }
     catch(err) {
       ErrorHandler(err,'retrieveRows');
     }
-    return tableRows;
+    return tableRows.data;
   },
 
   drop : function(db) {
