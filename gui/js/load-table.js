@@ -72,12 +72,11 @@ function FillTable(HTML_TABLE, HEADINGS, DATA) {
   }
 }
 
-function PrintPie(data) {
+function PrintPie(canvas,data) {
   let products = data.map(item => item.itemname);
   let quantities = data.map(item => item.quantity);
-
-  let PieGraphQty = document.getElementById('quantity');
-  new Chart(PieGraphQty, {
+  
+  new Chart(canvas, {
     type: 'pie',
     data: {
       labels: products,
