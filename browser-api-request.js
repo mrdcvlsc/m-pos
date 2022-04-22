@@ -1,5 +1,5 @@
 // POST
-fetch('http://localhost:8080/data/inventory', {
+fetch('/data/inventory', {
   headers: {
     // 'Accept': 'application/json',
     'Content-Type': 'application/json'
@@ -20,7 +20,7 @@ fetch('http://localhost:8080/data/inventory', {
 });
 
 // UPDATE
-fetch('http://localhost:8080/data/inventory/Spandals&+SUPER-XXXL', {
+fetch('/data/inventory/Spandals&+SUPER-XXXL', {
   headers: {
     // 'Accept': 'application/json',
     'Content-Type': 'application/json'
@@ -41,7 +41,7 @@ fetch('http://localhost:8080/data/inventory/Spandals&+SUPER-XXXL', {
 });
 
 // DELETE
-fetch('http://localhost:8080/data/inventory/Spandals&+SUPER-XXXLL', {
+fetch('/data/inventory/Spandals&+SUPER-XXXLL', {
   headers: {
     // 'Accept': 'application/json',
     'Content-Type': 'application/json'

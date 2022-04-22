@@ -1,26 +1,49 @@
 import { FillTable, PrintStats, PrintPie } from './load-table.js';
 
-const PRODUCT = 0;
-const CLASS = 1;
-const PRICE = 2;
-const QUANTITY = 3;
+let PieGraphQty, ItemSelected = document.getElementById('selected-item');
 
-// INITIAL LOADS
-let response = await fetch("/data/inventory");
-let data = await response.json();
+function UpdateTableRowEvents() {
+  let TableRows = Array.from(document.getElementsByTagName("tr"));
+  console.log(TableRows);
+  console.log(TableRows.children);
+  let Current;
+  for(let i=0; i<TableRows.length; ++i) {
+    TableRows[i].addEventListener('click', function(){
+      console.log(TableRows[i]);
+      try{
+        Current.style.backgroundColor = '';
+        Current.style.color = '';
+        Current.style.outline = '';
+      }
+      catch(err){
+        console.log('Initial Selection');
+      }
+      this.style.backgroundColor = 'rgb(7, 153, 153)';
+      this.style.color = 'white';
+      this.style.outline = '0.2em solid rgb(5, 185, 5)';
+      Current = this;
+      ItemSelected.value = Current.querySelector('td').innerText;
+    });
+  }
+}
 
-let totalCost = document.getElementById("total-cost");
-let totalQuantity = document.getElementById("total-quantity");
+async function LoadResource() {
+  let response = await fetch("/data/inventory");
+  let data = await response.json();
 
-FillTable(document.querySelector("table"),['Products','Class','Price','Quantity'],data);
-PrintStats(totalCost,totalQuantity,data);
+  let totalCost = document.getElementById("total-cost");
+  let totalQuantity = document.getElementById("total-quantity");
 
-// canvas
-let PieGraphQty = document.getElementById('quantity');
-PrintPie(PieGraphQty,data);
+  FillTable(document.querySelector("table"),['Products','Class','Price','Quantity'],data);
+  PrintStats(totalCost,totalQuantity,data);
+
+  PieGraphQty = document.getElementById('quantity');
+  PrintPie(PieGraphQty,data);
+  UpdateTableRowEvents();
+}
+LoadResource();
 
 // main button events
-
 const LabelHeadings = document.querySelector("thead");
 const PopUpContainer = document.querySelector(".popup-container");
 
@@ -70,30 +93,6 @@ const editCancle = document.querySelector(".edit1");
 const deleteConfirm = document.querySelector(".delete0");
 const deleteCancle = document.querySelector(".delete1");
 
-function UpdateTableRowEvents() {
-  let TableRows = Array.from(document.getElementsByTagName("tr"));
-  let Current;
-  for(let i=0; i<TableRows.length; ++i) {
-    TableRows[i].addEventListener('click', function(){
-      console.log(TableRows[i]);
-      try{
-        Current.style.backgroundColor = '';
-        Current.style.color = '';
-        Current.style.outline = '';
-      }
-      catch(err){
-        console.log('Initial Selection');
-      }
-      this.style.backgroundColor = 'rgb(7, 153, 153)';
-      this.style.color = 'white';
-      this.style.outline = '0.2em solid rgb(5, 185, 5)';
-      Current = this;
-    });
-  }
-}
-
-UpdateTableRowEvents();
-
 addConfirm.addEventListener('click', event => {
 
   let ItemNameInput = AddPopUp.querySelector("#add-itemname");
@@ -113,21 +112,40 @@ addConfirm.addEventListener('click', event => {
   else if(QuantityInput.value==='') {
     alert('Fill Up Quantity');
   }
-  else {
-
-    // clear fields
-    ItemNameInput.value = '';
-    ClassInput.value = '';
-    PriceInput.value = '';
-    QuantityInput.value = '';
+  else { // requirements meet
 
     // send post request
+    fetch('/data/inventory', {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'post',
+      body: JSON.stringify({
+        "itemname": ItemNameInput.value,
+        "class": ClassInput.value,
+        "price": PriceInput.value,
+        "quantity": QuantityInput.value
+      })
+    }).then(function (response) {
+      response.json().then(function (data) {
+        
+        console.log(data);
 
-    // refresh the list
-    UpdateTableRowEvents();
+        // clear fields
+        ItemNameInput.value = '';
+        ClassInput.value = '';
+        PriceInput.value = '';
+        QuantityInput.value = '';
 
-    // close popup window
-    ClosePopUp(AddPopUp);
+        // refresh the list
+        LoadResource();
+
+        // close popup window
+        ClosePopUp(AddPopUp);
+      });
+    }).catch(function (error) {
+      console.error(error);
+    });
   }
 });
 
