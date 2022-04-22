@@ -40,6 +40,7 @@ function DisplayPopUp(ShowPopUpBox) {
 }
 
 function ClosePopUp(ShowPopUpBox) {
+  console.log('ClosePopUp()')
   PopUpContainer.style.display = 'none';
   LabelHeadings.style.display = '';
   PieGraphQty.style.display = 'block';
@@ -69,6 +70,30 @@ const editCancle = document.querySelector(".edit1");
 const deleteConfirm = document.querySelector(".delete0");
 const deleteCancle = document.querySelector(".delete1");
 
+function UpdateTableRowEvents() {
+  let TableRows = Array.from(document.getElementsByTagName("tr"));
+  let Current;
+  for(let i=0; i<TableRows.length; ++i) {
+    TableRows[i].addEventListener('click', function(){
+      console.log(TableRows[i]);
+      try{
+        Current.style.backgroundColor = '';
+        Current.style.color = '';
+        Current.style.outline = '';
+      }
+      catch(err){
+        console.log('Initial Selection');
+      }
+      this.style.backgroundColor = 'rgb(7, 153, 153)';
+      this.style.color = 'white';
+      this.style.outline = '0.2em solid rgb(5, 185, 5)';
+      Current = this;
+    });
+  }
+}
+
+UpdateTableRowEvents();
+
 addConfirm.addEventListener('click', event => {
 
   let ItemNameInput = AddPopUp.querySelector("#add-itemname");
@@ -95,6 +120,11 @@ addConfirm.addEventListener('click', event => {
     ClassInput.value = '';
     PriceInput.value = '';
     QuantityInput.value = '';
+
+    // send post request
+
+    // refresh the list
+    UpdateTableRowEvents();
 
     // close popup window
     ClosePopUp(AddPopUp);

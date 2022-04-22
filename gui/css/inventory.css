@@ -148,3 +148,17 @@ input{
   color: white;
   padding: .2em;
 }
+
+tr{
+  transition-delay: 5s;
+  transition: 0.2s ease;
+}
+
+tr:hover, tr:active, tr:focus{
+  background-color: rgb(23, 196, 196) !important;
+  color: white;
+}
+
+td{
+  cursor: default;
+}
