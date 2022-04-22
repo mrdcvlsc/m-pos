@@ -1,7 +1,7 @@
 import { FillTable, PrintStats, PrintPie } from './load-table.js';
 
 let PieGraphQty, SelectedTR, SelectedItemname = document.getElementById('selected-item');
-let Selection = null;
+let Selection = null, PieChart = null;
 
 function UpdateTableRowEvents() {
   let TableRows = Array.from(document.getElementsByTagName("tr"));
@@ -48,10 +48,15 @@ async function LoadResource() {
 
   FillTable(document.querySelector("table"),['Products','Class','Price','Quantity'],data);
   PrintStats(totalCost,totalQuantity,data);
-
-  PieGraphQty = document.getElementById('quantity');
-  PrintPie(PieGraphQty,data);
   UpdateTableRowEvents();
+
+  PieGraphQty = null;
+  PieGraphQty = document.getElementById('quantity');
+
+  if(PieChart) {
+    PieChart.destroy();
+  }
+  PieChart = PrintPie(PieGraphQty,data);
 }
 LoadResource();
 
@@ -79,6 +84,18 @@ function ClosePopUp(ShowPopUpBox) {
   LabelHeadings.style.display = '';
   PieGraphQty.style.display = 'block';
   ShowPopUpBox.style.display = 'none';
+
+  Selection = null;
+  SelectedItemname.value = 'None';
+
+  try{
+    SelectedTR.style.backgroundColor = '';
+    SelectedTR.style.color = '';
+    SelectedTR.style.outline = '';
+  }
+  catch(err) {
+    console.log('ClosePopUp() : No rows selected yet to be clear');
+  }
 }
 
 AddButton.addEventListener('click', event => {
@@ -94,24 +111,12 @@ EditButton.addEventListener('click', event => {
     let PriceInput = EditPopUp.querySelector("#edit-price");
     let QuantityInput = EditPopUp.querySelector("#edit-quantity");
     
-    console.log(ItemNameInput);
-    console.log(ClassInput);
-    console.log(PriceInput);
-    console.log(QuantityInput);
-
     ItemNameInput.value = Selection.itemname;
     ClassInput.value = Selection.class;
     PriceInput.value = Selection.price;
     QuantityInput.value = Selection.quantity;
 
     DisplayPopUp(EditPopUp);
-
-    SelectedTR.style.backgroundColor = '';
-    SelectedTR.style.color = '';
-    SelectedTR.style.outline = '';
-
-    SelectedItemname.value = 'None';
-    Selection = null;
   }
   else {
     alert('Make a selection first by clicking an item in the inventory list');
@@ -169,7 +174,7 @@ addConfirm.addEventListener('click', event => {
     }).then(function (response) {
       response.json().then(function (data) {
         
-        console.log(data);
+        console.log('ADD',data);
 
         // clear fields
         ItemNameInput.value = '';
@@ -194,7 +199,59 @@ addCancle.addEventListener('click', event => {
 });
 
 editConfirm.addEventListener('click', event => {
-  ClosePopUp(EditPopUp);
+
+  let ItemNameInput = EditPopUp.querySelector("#edit-itemname");
+  let ClassInput = EditPopUp.querySelector("#edit-class");
+  let PriceInput = EditPopUp.querySelector("#edit-price");
+  let QuantityInput = EditPopUp.querySelector("#edit-quantity");
+
+  if(ItemNameInput.value==='') {
+    alert('Fill Up Item Name');
+  }
+  else if(ClassInput.value==='') {
+    alert('Fill Up Class');
+  }
+  else if(PriceInput.value==='') {
+    alert('Fill Up Price');
+  }
+  else if(QuantityInput.value==='') {
+    alert('Fill Up Quantity');
+  }
+  else { // requirements meet
+
+    // send put request
+    fetch(`/data/inventory/${Selection.itemname.replaceAll(' ','&+')}`, {
+      headers: {
+        // 'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'put',
+      body: JSON.stringify({
+        "itemname": ItemNameInput.value,
+        "class": ClassInput.value,
+        "price": PriceInput.value,
+        "quantity": QuantityInput.value
+      })
+    }).then(function (response) {
+      response.json().then(function (data) {
+        console.log('EDIT',data);
+
+        // clear fields
+        ItemNameInput.value = '';
+        ClassInput.value = '';
+        PriceInput.value = '';
+        QuantityInput.value = '';
+
+        // refresh the list
+        LoadResource();
+
+        // close popup window
+        ClosePopUp(EditPopUp);
+      });
+    }).catch(function (error) {
+      console.error(error);
+    }); 
+  }
 });
 
 editCancle.addEventListener('click', event => {

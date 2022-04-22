@@ -76,7 +76,7 @@ function PrintPie(canvas,data) {
   let products = data.map(item => item.itemname);
   let quantities = data.map(item => item.quantity);
   
-  new Chart(canvas, {
+  let PieChart = new Chart(canvas, {
     type: 'pie',
     data: {
       labels: products,
@@ -110,5 +110,7 @@ function PrintPie(canvas,data) {
       borderWidth: 0.4
     }
   });
+
+  return PieChart;
 }
 export { FillTable, PrintStats, PrintPie };
