@@ -1,15 +1,14 @@
 import { FillTable, PrintStats, PrintPie } from './load-table.js';
 
-let PieGraphQty, ItemSelected = document.getElementById('selected-item');
+let PieGraphQty, SelectedTR, SelectedItemname = document.getElementById('selected-item');
+let Selection = null;
 
 function UpdateTableRowEvents() {
   let TableRows = Array.from(document.getElementsByTagName("tr"));
-  console.log(TableRows);
-  console.log(TableRows.children);
   let Current;
   for(let i=0; i<TableRows.length; ++i) {
     TableRows[i].addEventListener('click', function(){
-      console.log(TableRows[i]);
+
       try{
         Current.style.backgroundColor = '';
         Current.style.color = '';
@@ -18,11 +17,24 @@ function UpdateTableRowEvents() {
       catch(err){
         console.log('Initial Selection');
       }
+      
+      SelectedTR = this;
       this.style.backgroundColor = 'rgb(7, 153, 153)';
       this.style.color = 'white';
       this.style.outline = '0.2em solid rgb(5, 185, 5)';
+      
       Current = this;
-      ItemSelected.value = Current.querySelector('td').innerText;
+      
+      SelectedItemname.value = Current.querySelector('td').innerText;
+
+      let rowValues = Array.from(Current.children);
+
+      Selection = {
+        itemname : rowValues[0].innerText,
+        class : rowValues[1].innerText,
+        price : rowValues[2].innerText.replaceAll('₱',''),
+        quantity : rowValues[3].innerText.replaceAll('x','')
+      };
     });
   }
 }
@@ -63,7 +75,6 @@ function DisplayPopUp(ShowPopUpBox) {
 }
 
 function ClosePopUp(ShowPopUpBox) {
-  console.log('ClosePopUp()')
   PopUpContainer.style.display = 'none';
   LabelHeadings.style.display = '';
   PieGraphQty.style.display = 'block';
@@ -75,7 +86,36 @@ AddButton.addEventListener('click', event => {
 });
 
 EditButton.addEventListener('click', event => {
-  DisplayPopUp(EditPopUp);
+
+  if(Selection) {
+
+    let ItemNameInput = EditPopUp.querySelector("#edit-itemname");
+    let ClassInput = EditPopUp.querySelector("#edit-class");
+    let PriceInput = EditPopUp.querySelector("#edit-price");
+    let QuantityInput = EditPopUp.querySelector("#edit-quantity");
+    
+    console.log(ItemNameInput);
+    console.log(ClassInput);
+    console.log(PriceInput);
+    console.log(QuantityInput);
+
+    ItemNameInput.value = Selection.itemname;
+    ClassInput.value = Selection.class;
+    PriceInput.value = Selection.price;
+    QuantityInput.value = Selection.quantity;
+
+    DisplayPopUp(EditPopUp);
+
+    SelectedTR.style.backgroundColor = '';
+    SelectedTR.style.color = '';
+    SelectedTR.style.outline = '';
+
+    SelectedItemname.value = 'None';
+    Selection = null;
+  }
+  else {
+    alert('Make a selection first by clicking an item in the inventory list');
+  }
 });
 
 DeleteButton.addEventListener('click', event => {
