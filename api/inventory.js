@@ -1,4 +1,4 @@
-const { getAllItems, addItem } = require('../controllers/items');
+const { getAllItems, addItem, deleteItem } = require('../controllers/items');
 
 let insertStatement, updateStatement, deleteStatement, readStatement;
 
@@ -43,10 +43,25 @@ const PostItemOption = {
   handler: addItem
 }
 
+const DeleteItemOption = {
+  schema: {
+    response: {
+      200: {
+        type: 'object',
+        properties: {
+          changes: { type: 'number' }
+        }
+      }
+    }
+  },
+  handler: deleteItem
+}
+
 async function api(fastify, options) {
 
   fastify.get('/data/inventory', RetreiveInventory);
   fastify.post('/data/inventory', PostItemOption);
+  fastify.delete('/data/inventory/:itemname', DeleteItemOption);
 }
 
 module.exports = api;

@@ -14,13 +14,12 @@ catch(err) {
 
 const getAllItems = (request,reply) => {
   let inventoryData = InventoryDB.retrieveRows(readStatement);
-  console.log(inventoryData);
   reply.send(inventoryData);
 }
 
 const addItem = (request,reply) => {
   let item = request.body;
-  let queryResults = InventoryDB.insertRow(
+  let queryResult = InventoryDB.insertRow(
     insertStatement,
     item.itemname,
     item.class,
@@ -28,10 +27,20 @@ const addItem = (request,reply) => {
     item.quantity
   );
   
-  reply.code(201).send(queryResults);
+  reply.code(201).send(queryResult);
+}
+
+const deleteItem = (request, reply) => {
+  let { itemname } = request.params;
+  itemname = itemname.replaceAll('&+',' ');
+  
+  let queryResult = InventoryDB.deleteRow(deleteStatement,itemname);
+
+  reply.send(queryResult);
 }
 
 module.exports = {
   getAllItems,
-  addItem
+  addItem,
+  deleteItem
 }

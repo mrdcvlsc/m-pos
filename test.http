@@ -16,7 +16,7 @@ Content-Type: application/json
 }
 
 ### DELETE ITEM
-DELETE http://localhost:8080/items/3 HTTP/1.1
+DELETE http://localhost:8080/data/inventory/Spandals HTTP/1.1
 
 ### UPDATE ITEM
 PUT http://localhost:8080/items/2 HTTP/1.1
