@@ -19,9 +19,12 @@ Content-Type: application/json
 DELETE http://localhost:8080/data/inventory/Spandals HTTP/1.1
 
 ### UPDATE ITEM
-PUT http://localhost:8080/items/2 HTTP/1.1
+PUT http://localhost:8080/data/inventory/Tik-Tok&+Shorts&+Yello HTTP/1.1
 Content-Type: application/json
 
 {
-    "name": "Updated Item"
+    "itemname": "Tik-Tok Shorts Yellow",
+    "class": "Clothing",
+    "price": 30,
+    "quantity": 6
 }

@@ -39,8 +39,27 @@ const deleteItem = (request, reply) => {
   reply.send(queryResult);
 }
 
+const updateItem = (request, reply) => {
+  let { itemname } = request.params;
+  let newValues = request.body;
+
+  itemname = itemname.replaceAll('&+',' ');
+
+  let queryResult = InventoryDB.updateRow(
+    updateStatement,
+    newValues.itemname,
+    newValues.class,
+    newValues.price,
+    newValues.quantity,
+    itemname
+  );
+
+  reply.send(queryResult);
+}
+
 module.exports = {
   getAllItems,
   addItem,
-  deleteItem
+  deleteItem,
+  updateItem
 }
