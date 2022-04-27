@@ -6,16 +6,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/globals.css">
   <link rel="stylesheet" href="../css/text.css">
-  <link rel="stylesheet" href="../css/transaction/transaction.css">
+  <link rel="stylesheet" href="../css/transaction/layout.css">
+  <link rel="stylesheet" href="../css/inventory/table.css">
 
   <script type="module" src="../js/transaction.js" defer></script>
+
   <title>M.POS - Transaction</title>
 </head>
 <body>
   <div class="main">
-    <div class="inventory-table">
+    <div class="tblc">
       <h2>Available Products</h2>
-      <table class="inventory">
+      <table id="inventory">
         <thead></thead>
         <tbody></tbody>
       </table>
@@ -26,7 +28,7 @@
     </div>
 
     <div class="buy-table">
-      <table class="chosen">
+      <table id="chosen">
         <h2>Products to be Sold</h2>
         <thead></thead>
         <tbody></tbody>

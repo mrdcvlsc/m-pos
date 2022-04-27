@@ -6,28 +6,13 @@
   gap: 2em;
 }
 
-.gui-button {
+.gbtn {
   width: 29vw;
   height: 40vh;
   max-width: 600px;
 }
-.gui-button > h2 {
+.gbtn > h2 {
   margin: 0.8em 0px;
-}
-
-.inventory{
-  background-image: linear-gradient(45deg, rgb(72, 38, 192), rgb(39, 20, 110));
-  border: 0.2em solid rgb(38, 6, 75);
-}
-
-.transaction{
-  background-image: linear-gradient(45deg, rgb(180, 0, 69), rgb(153, 9, 110));
-  border: 0.2em solid rgb(128, 3, 45);
-}
-
-.data-visualization{
-  background-image: linear-gradient(45deg, rgb(0, 117, 10), rgb(3, 175, 32));
-  border: 0.2em solid rgb(14, 71, 3);
 }
 
 img {
@@ -47,7 +32,7 @@ img {
 }
 
 @media (max-height: 600px) {
-  .gui-button {
+  .gbtn {
     height: 30vh;;
   }
 }
@@ -57,7 +42,7 @@ img {
     display: none;
   }
   
-  .gui-button {
+  .gbtn {
     height: 40vh;;
   }
 }
@@ -76,7 +61,7 @@ img {
     gap: 1em;
   }
 
-  .gui-button {
+  .gbtn {
     width: 90vw;
     height: 22vh;
   }

@@ -1,0 +1,51 @@
+.gbtn {
+  color: white;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+
+  border-radius: 0.5em 0.5em 0.5em 0.5em;
+  
+  padding: 2em 1em;
+
+  -webkit-box-shadow: 0.2em 0.2em 0.1em rgba(0, 0, 0, 0.247);
+  -moz-box-shadow: 0.2em 0.2em 0.1em rgba(0, 0, 0, 0.247);
+  -ms-box-shadow: 0.2em 0.2em 0.1em rgba(0, 0, 0, 0.247);
+  -o-box-shadow: 0.2em 0.2em 0.1em rgba(0, 0, 0, 0.247);
+  box-shadow: 0.2em 0.2em 0.1em rgba(0, 0, 0, 0.247);
+
+  transition: ease 0.2s;
+}
+
+.gbtn:hover {
+  transform: scale(1.05);
+  -webkit-box-shadow: 0.4em 0.4em 0.2em rgba(0, 0, 0, 0.096), 0.2em 0.2em 0.2em rgba(0, 0, 0, 0.247);
+  -moz-box-shadow: 0.4em 0.4em 0.2em rgba(0, 0, 0, 0.096), 0.2em 0.2em 0.2em rgba(0, 0, 0, 0.247);
+  -ms-box-shadow: 0.4em 0.4em 0.2em rgba(0, 0, 0, 0.096), 0.2em 0.2em 0.2em rgba(0, 0, 0, 0.247);
+  -o-box-shadow: 0.4em 0.4em 0.2em rgba(0, 0, 0, 0.096), 0.2em 0.2em 0.2em rgba(0, 0, 0, 0.247);
+  box-shadow: 0.4em 0.4em 0.2em rgba(0, 0, 0, 0.096), 0.2em 0.2em 0.2em rgba(0, 0, 0, 0.247);
+}
+
+.gbtn > h2{
+  cursor: default;
+}
+
+/* button colors and border */
+
+.cblue{
+  background-image: linear-gradient(45deg, rgb(72, 38, 192), rgb(39, 20, 110));
+  border: 0.2em solid rgb(38, 6, 75);
+}
+
+.cred{
+  background-image: linear-gradient(45deg, rgb(180, 0, 69), rgb(153, 9, 110));
+  border: 0.2em solid rgb(128, 3, 45);
+}
+
+.cgreen{
+  background-image: linear-gradient(45deg, rgb(0, 117, 10), rgb(3, 175, 32));
+  border: 0.2em solid rgb(14, 71, 3);
+}

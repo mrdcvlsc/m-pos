@@ -7,7 +7,10 @@
   
   <link rel="stylesheet" href="../css/globals.css">
   <link rel="stylesheet" href="../css/text.css">
-  <link rel="stylesheet" href="../css/inventory/inventory.css">
+  <link rel="stylesheet" href="../css/gui-button.css">
+  
+  <link rel="stylesheet" href="../css/inventory/layout.css">
+  <link rel="stylesheet" href="../css/inventory/table.css">
 
   <script src="../js/minify-charts.js"></script>
   <script type="module" src="../js/inventory.js" defer></script>
@@ -25,8 +28,8 @@
         <input id="add-price" type="number" placeholder="Price" required>
         <input id="add-quantity" type="number" placeholder="Quantity" required>
         <div>
-          <div class="gui-button add0 confirm"><h2>Confirm</h2></div>
-          <div class="gui-button add1 cancle"><h2>Cancle</h2></div>
+          <div class="gbtn cgreen add0"><h2>Confirm</h2></div>
+          <div class="gbtn cred add1"><h2>Cancle</h2></div>
         </div>
       </div>
     </div>
@@ -39,8 +42,8 @@
         <input id="edit-price" type="number" placeholder="Price" required>
         <input id="edit-quantity" type="number" placeholder="Quantity" required>
         <div>
-          <div class="gui-button edit0 confirm"><h2>Confirm</h2></div>
-          <div class="gui-button edit1 cancle"><h2>Cancle</h2></div>
+          <div class="gbtn cgreen edit0"><h2>Confirm</h2></div>
+          <div class="gbtn cred edit1"><h2>Cancle</h2></div>
         </div>
       </div>
     </div>
@@ -50,16 +53,16 @@
       <div class="pop-fields">
         <h2 id="del-name"></h2>
         <div>
-          <div class="gui-button delete0 confirm"><h2>Confirm</h2></div>
-          <div class="gui-button delete1 cancle"><h2>Cancle</h2></div>
+          <div class="gbtn cgreen delete0"><h2>Confirm</h2></div>
+          <div class="gbtn cred delete1"><h2>Cancle</h2></div>
         </div>
       </div>
     </div>
   </div>
 
   <div class="main">
-    <div class="table-container">
-      <table>
+    <div class="tblc">
+      <table id="inventory">
         <thead></thead>
         <tbody></tbody>
       </table>
@@ -78,13 +81,13 @@
         <a href="/gui/menu"><h2>Go Back</h2></a>
       </div>
 
-      <div class="gui-button add">
+      <div class="gbtn cgreen add">
         <h2>Add</h2>
       </div>
-      <div class="gui-button edit">
+      <div class="gbtn cblue edit">
         <h2>Edit</h2>
       </div>
-      <div class="gui-button delete">
+      <div class="gbtn cred delete">
         <h2>Delete</h2>
       </div>
       <div class="canvas-container">

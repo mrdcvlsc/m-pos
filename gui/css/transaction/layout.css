@@ -1,0 +1,27 @@
+.main {
+  height: 100%;
+  width: 100%;
+  padding: 1em;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+      "stock stock buttons"
+      "sold sold buttons";
+  gap: 1rem;
+}
+
+.tblc {
+  grid-area: stock;
+}
+
+.transaction {
+  grid-area: buttons;
+  border: 1px solid black;
+}
+
+.buy-table {
+  grid-area: sold;
+  border: 1px solid black;
+}

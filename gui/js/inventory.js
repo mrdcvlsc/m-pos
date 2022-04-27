@@ -46,7 +46,7 @@ async function LoadResource() {
   let totalCost = document.getElementById("total-cost");
   let totalQuantity = document.getElementById("total-quantity");
 
-  FillTable(document.querySelector("table"),['Products','Class','Price','Quantity'],data);
+  FillTable(document.getElementById("inventory"),['Products','Class','Price','Quantity'],data);
   PrintStats(totalCost,totalQuantity,data);
   UpdateTableRowEvents();
 
