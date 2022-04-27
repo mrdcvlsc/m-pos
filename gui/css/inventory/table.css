@@ -1,0 +1,48 @@
+.tblc {
+  border: thin rgb(99, 49, 75) solid;
+
+  background-color: rgb(241, 241, 241);
+  overflow: auto;
+
+  border-radius: 0.7em 0.7em 0.7em 0.7em;
+}
+
+.tblc > table{
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+}
+
+.tblc > table > tbody tr:nth-child(2n){
+  background-color: rgb(167, 252, 156);
+  font-weight: thin;
+}
+
+.tblc > table > thead > th{
+  position: sticky;
+  top: 0;
+
+  background: rgb(228, 28, 138);
+  color: white;
+}
+
+.tblc > table > thead > th, .tblc > table > tbody > tr{
+  text-align: center;
+  height: 1.7em;
+}
+
+.tblc > table > tbody > tr{
+  transition-delay: 5s;
+  transition: 0.2s ease;
+}
+
+.tblc > table > tbody > tr:hover,
+.tblc > table > tbody > tr:active,
+.tblc > table > tbody > tr:focus{
+  background-color: rgb(23, 196, 196) !important;
+  color: white;
+}
+
+.tblc > table > tbody > tr{
+  cursor: default;
+}

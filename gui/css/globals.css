@@ -2,49 +2,10 @@
   padding: 0px;
   margin: 0px;
   box-sizing: border-box;
-  font-family: 'Fira Sans';
+  font-family: sans-serif, 'Fira Sans';
 }
 
 body{
   height: 100vh;
   background-image: linear-gradient(45deg, rgb(0, 162, 255),rgb(243, 161, 175));
-}
-
-.gui-button {
-  color: white;
-  
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  text-align: center;
-
-  border-radius: 0.5em 0.5em 0.5em 0.5em;
-  
-  padding: 2em 1em;
-
-  -webkit-box-shadow: 0.2em 0.2em 0.1em rgba(0, 0, 0, 0.247);
-  -moz-box-shadow: 0.2em 0.2em 0.1em rgba(0, 0, 0, 0.247);
-  -ms-box-shadow: 0.2em 0.2em 0.1em rgba(0, 0, 0, 0.247);
-  -o-box-shadow: 0.2em 0.2em 0.1em rgba(0, 0, 0, 0.247);
-  box-shadow: 0.2em 0.2em 0.1em rgba(0, 0, 0, 0.247);
-
-  transition: ease 0.2s;
-}
-
-.gui-button:hover {
-  transform: scale(1.05);
-  -webkit-box-shadow: 0.4em 0.4em 0.2em rgba(0, 0, 0, 0.096), 0.2em 0.2em 0.2em rgba(0, 0, 0, 0.247);
-  -moz-box-shadow: 0.4em 0.4em 0.2em rgba(0, 0, 0, 0.096), 0.2em 0.2em 0.2em rgba(0, 0, 0, 0.247);
-  -ms-box-shadow: 0.4em 0.4em 0.2em rgba(0, 0, 0, 0.096), 0.2em 0.2em 0.2em rgba(0, 0, 0, 0.247);
-  -o-box-shadow: 0.4em 0.4em 0.2em rgba(0, 0, 0, 0.096), 0.2em 0.2em 0.2em rgba(0, 0, 0, 0.247);
-  box-shadow: 0.4em 0.4em 0.2em rgba(0, 0, 0, 0.096), 0.2em 0.2em 0.2em rgba(0, 0, 0, 0.247);
-}
-
-.gui-button:active{
-  background-color: green;
-}
-
-.gui-button > h2{
-  cursor: default;
 }

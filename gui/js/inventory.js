@@ -46,7 +46,7 @@ async function LoadResource() {
   let totalCost = document.getElementById("total-cost");
   let totalQuantity = document.getElementById("total-quantity");
 
-  FillTable(document.querySelector("table"),['Products','Class','Price','Quantity'],data);
+  FillTable(document.getElementById("inventory"),['Products','Class','Price','Quantity'],data);
   PrintStats(totalCost,totalQuantity,data);
   UpdateTableRowEvents();
 
@@ -124,7 +124,14 @@ EditButton.addEventListener('click', event => {
 });
 
 DeleteButton.addEventListener('click', event => {
-  DisplayPopUp(DeletePopUp);
+  if(Selection) {
+    let ItemName = document.getElementById('del-name');
+    ItemName.innerText = `Remove "${Selection.itemname}" from the inventory?`;
+    DisplayPopUp(DeletePopUp);
+  }
+  else {
+    alert('Make a selection first by clicking an item in the inventory list');
+  }
 });
 
 // popup action buttons
@@ -189,7 +196,7 @@ addConfirm.addEventListener('click', event => {
         ClosePopUp(AddPopUp);
       });
     }).catch(function (error) {
-      console.error(error);
+      console.error('ERROR in : Add>Confirm>fetch()\n',error);
     });
   }
 });
@@ -249,7 +256,7 @@ editConfirm.addEventListener('click', event => {
         ClosePopUp(EditPopUp);
       });
     }).catch(function (error) {
-      console.error(error);
+      console.error('ERROR in : Edit>Confirm>fetch()\n',error);
     }); 
   }
 });
@@ -259,7 +266,25 @@ editCancle.addEventListener('click', event => {
 });
 
 deleteConfirm.addEventListener('click', event => {
-  ClosePopUp(DeletePopUp);
+
+  fetch(`/data/inventory/${Selection.itemname.replaceAll(' ','&+')}`, {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    method: 'delete'
+  }).then(function (response) {
+    response.json().then(function (data) {
+      console.log('DELETE',data);
+
+      // refresh the list
+      LoadResource();
+
+      // close popup window
+      ClosePopUp(DeletePopUp);
+    });
+  }).catch(function (error) {
+    console.error('ERROR in : Delete>Confirm>fetch()\n',error);
+  });
 });
 
 deleteCancle.addEventListener('click', event => {

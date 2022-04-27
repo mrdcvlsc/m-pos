@@ -33,42 +33,47 @@ function PrintStats(CostOutput, QuantityOutput, data=null) {
 
 function FillTable(HTML_TABLE, HEADINGS, DATA) {
 
-  let TABLE_HEADING = HTML_TABLE.querySelector("thead");
-  let TABLE_BODY = HTML_TABLE.querySelector("tbody");
-  
-  // clear
-  TABLE_HEADING.innerHTML = "";
-  TABLE_BODY.innerHTML = "";
-
-  // set headings
-  for(let i=0; i<HEADINGS.length; ++i) {
-    let Label = document.createElement("th");
-    Label.textContent = HEADINGS[i];
-    TABLE_HEADING.appendChild(Label);
-  }
-
-  // populate rows items
-  for(let CURRENT_ROW=0; CURRENT_ROW<DATA.length; ++CURRENT_ROW) {
-
-    let Row = document.createElement("tr");
-
-    let ProductName = document.createElement("td");
-    ProductName.textContent = DATA[CURRENT_ROW].itemname;
-    Row.appendChild(ProductName);
-
-    let ProductClass = document.createElement("td");
-    ProductClass.textContent = DATA[CURRENT_ROW].class;
-    Row.appendChild(ProductClass);
+  try{
+    let TABLE_HEADING = HTML_TABLE.querySelector("thead");
+    let TABLE_BODY = HTML_TABLE.querySelector("tbody");
     
-    let ProductPrice = document.createElement("td");
-    ProductPrice.textContent = `₱${DATA[CURRENT_ROW].price}`;
-    Row.appendChild(ProductPrice);
+    // clear
+    TABLE_HEADING.innerHTML = "";
+    TABLE_BODY.innerHTML = "";
 
-    let ProductQuantity = document.createElement("td");
-    ProductQuantity.textContent = `${DATA[CURRENT_ROW].quantity}x`;
-    Row.appendChild(ProductQuantity);
+    // set headings
+    for(let i=0; i<HEADINGS.length; ++i) {
+      let Label = document.createElement("th");
+      Label.textContent = HEADINGS[i];
+      TABLE_HEADING.appendChild(Label);
+    }
 
-    TABLE_BODY.appendChild(Row);
+    // populate rows items
+    for(let CURRENT_ROW=0; CURRENT_ROW<DATA.length; ++CURRENT_ROW) {
+
+      let Row = document.createElement("tr");
+
+      let ProductName = document.createElement("td");
+      ProductName.textContent = DATA[CURRENT_ROW].itemname;
+      Row.appendChild(ProductName);
+
+      let ProductClass = document.createElement("td");
+      ProductClass.textContent = DATA[CURRENT_ROW].class;
+      Row.appendChild(ProductClass);
+      
+      let ProductPrice = document.createElement("td");
+      ProductPrice.textContent = `₱${DATA[CURRENT_ROW].price}`;
+      Row.appendChild(ProductPrice);
+
+      let ProductQuantity = document.createElement("td");
+      ProductQuantity.textContent = `${DATA[CURRENT_ROW].quantity}x`;
+      Row.appendChild(ProductQuantity);
+
+      TABLE_BODY.appendChild(Row);
+    }
+  }
+  catch(err){
+    console.error(err);
   }
 }
 
