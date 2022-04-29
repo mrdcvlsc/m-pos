@@ -1,4 +1,4 @@
-import { FillTable } from './load-table.js';
+import { FillTable } from './table.js';
 
 async function LoadInventory() {
   let response = await fetch("/data/inventory");

@@ -31,49 +31,51 @@ function PrintStats(CostOutput, QuantityOutput, data=null) {
   QuantityOutput.value  = QuantitySum;
 }
 
-function FillTable(HTML_TABLE, HEADINGS, DATA) {
+class Table {
+  constructor(htmlTable, headings) {
+    this.table = htmlTable;
+    this.thead = this.table.querySelector("thead");
+    this.tbody = this.table.querySelector("tbody");
 
-  try{
-    let TABLE_HEADING = HTML_TABLE.querySelector("thead");
-    let TABLE_BODY = HTML_TABLE.querySelector("tbody");
-    
-    // clear
-    TABLE_HEADING.innerHTML = "";
-    TABLE_BODY.innerHTML = "";
+    this.headings = headings;
+    this.data = null;
+    this.selection = null;
 
     // set headings
-    for(let i=0; i<HEADINGS.length; ++i) {
-      let Label = document.createElement("th");
-      Label.textContent = HEADINGS[i];
-      TABLE_HEADING.appendChild(Label);
-    }
-
-    // populate rows items
-    for(let CURRENT_ROW=0; CURRENT_ROW<DATA.length; ++CURRENT_ROW) {
-
-      let Row = document.createElement("tr");
-
-      let ProductName = document.createElement("td");
-      ProductName.textContent = DATA[CURRENT_ROW].itemname;
-      Row.appendChild(ProductName);
-
-      let ProductClass = document.createElement("td");
-      ProductClass.textContent = DATA[CURRENT_ROW].class;
-      Row.appendChild(ProductClass);
-      
-      let ProductPrice = document.createElement("td");
-      ProductPrice.textContent = `₱${DATA[CURRENT_ROW].price}`;
-      Row.appendChild(ProductPrice);
-
-      let ProductQuantity = document.createElement("td");
-      ProductQuantity.textContent = `${DATA[CURRENT_ROW].quantity}x`;
-      Row.appendChild(ProductQuantity);
-
-      TABLE_BODY.appendChild(Row);
+    for(let i=0; i<this.headings.length; ++i) {
+      let th = document.createElement("th");
+      th.textContent = this.headings[i];
+      this.thead.appendChild(th);
     }
   }
-  catch(err){
-    console.error(err);
+
+  fillTable(data) {
+    try{      
+      // clear
+      this.tbody.innerHTML = "";
+  
+      // populate rows items
+      for(let i=0; i<data.length; ++i) {
+  
+        let tr = document.createElement("tr");
+
+        for(let element in data[i]) {
+          let td = document.createElement('td');
+          if(`${element}`==='price')
+            td.textContent = `₱${data[i][element]}`;
+          else if(`${element}`==='quantity')
+            td.textContent = `${data[i][element]}x`;
+          else
+            td.textContent = data[i][element];
+          tr.appendChild(td);
+        }
+  
+        this.tbody.appendChild(tr);
+      }
+    }
+    catch(err){
+      console.error(err);
+    }
   }
 }
 
@@ -118,4 +120,4 @@ function PrintPie(canvas,data) {
 
   return PieChart;
 }
-export { FillTable, PrintStats, PrintPie };
+export { PrintStats, PrintPie, Table };

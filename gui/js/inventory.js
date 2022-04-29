@@ -1,7 +1,9 @@
-import { FillTable, PrintStats, PrintPie } from './load-table.js';
+import { PrintStats, PrintPie, Table } from './table.js';
 
 let PieGraphQty, SelectedTR, SelectedItemname = document.getElementById('selected-item');
 let Selection = null, PieChart = null;
+
+let InventoryTable = new Table(document.getElementById("inventory"),['Products','Class','Price','Quantity']);
 
 function UpdateTableRowEvents() {
   let TableRows = Array.from(document.getElementsByTagName("tr"));
@@ -46,7 +48,8 @@ async function LoadResource() {
   let totalCost = document.getElementById("total-cost");
   let totalQuantity = document.getElementById("total-quantity");
 
-  FillTable(document.getElementById("inventory"),['Products','Class','Price','Quantity'],data);
+  InventoryTable.fillTable(data);
+  // FillTable(document.getElementById("inventory"),['Products','Class','Price','Quantity'],data);
   PrintStats(totalCost,totalQuantity,data);
   UpdateTableRowEvents();
 
