@@ -40,6 +40,7 @@ class Table {
     this.headings = headings;
     this.data = null;
     this.selection = null;
+    this.selected_tr = null;
 
     // set headings
     for(let i=0; i<this.headings.length; ++i) {
@@ -77,6 +78,56 @@ class Table {
       console.error(err);
     }
   }
+
+  /**
+   * 
+   * @param {HTMLInputElement} input when specified, if a click even occured
+   * the innerText of the first child of the selected <tr> will be displayed
+   * in the <input> tag.
+   */
+  enableSelection(input=null) {
+    let tr_array = Array.from(this.tbody.children);
+    let previous_tr;
+    let itself = this;
+
+    for(let tr of tr_array) {
+      tr.addEventListener('click', function(){
+        try{
+          previous_tr.style.backgroundColor = '';
+          previous_tr.style.color = '';
+          previous_tr.style.outline = '';
+        }
+        catch(err){
+          console.log('Initial Selection');
+        }
+        
+        this.style.backgroundColor = 'rgb(7, 153, 153)';
+        this.style.color = 'white';
+        this.style.outline = '0.2em solid rgb(5, 185, 5)';
+        
+        previous_tr = this;
+        
+        if(input)
+          input.value = previous_tr.querySelector('td').innerText;
+  
+        let rowValues = Array.from(previous_tr.children);
+  
+        let selected = {
+          itemname : rowValues[0].innerText,
+          class : rowValues[1].innerText,
+          price : rowValues[2].innerText.replaceAll('₱',''),
+          quantity : rowValues[3].innerText.replaceAll('x','')
+        };
+
+        TableSetSelection(itself,selected,this);
+      });
+    }
+  }
+}
+
+function TableSetSelection(table,selection,selected_tr) {
+  table.selection = selection;
+  table.selected_tr = selected_tr;
 }
 
 function PrintPie(canvas,data) {

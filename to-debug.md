@@ -1,0 +1,1 @@
+# cannot delete inventory items what has '?' at the end? in their itemname.
