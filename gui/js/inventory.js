@@ -5,26 +5,53 @@ let PieChart = null;
 
 let InventoryTable = new Table(document.getElementById("inventory"),['Products','Class','Price','Quantity']);
 
+function RefreshTable(PreviousData, FetchData) {
+  if(PreviousData) {
+    if(PreviousData.length===FetchData.length) {
+      for(let i=0; i<PreviousData.length; i++) {
+        if(
+          PreviousData[i].itemname !== FetchData[i].itemname ||
+          PreviousData[i].class !== FetchData[i].class ||
+          PreviousData[i].quantity !== FetchData[i].quantity ||
+          PreviousData[i].price !== FetchData[i].price
+        ) {
+          return true;
+        }
+      }
+      return false;
+    }
+  }
+  return true;
+}
+
 async function LoadResource() {
   let response = await fetch("/data/inventory");
   let data = await response.json();
 
-  let totalCost = document.getElementById("total-cost");
-  let totalQuantity = document.getElementById("total-quantity");
+  if(RefreshTable(InventoryTable.data,data)) {
 
-  InventoryTable.fillTable(data);
-  PrintStats(totalCost,totalQuantity,data);
-  InventoryTable.enableSelection(SelectedItemname);
+    let totalCost = document.getElementById("total-cost");
+    let totalQuantity = document.getElementById("total-quantity");
 
-  PieGraphQty = null;
-  PieGraphQty = document.getElementById('quantity');
+    InventoryTable.fillTable(data);
+    PrintStats(totalCost,totalQuantity,data);
+    InventoryTable.enableSelection(SelectedItemname);
 
-  if(PieChart) {
-    PieChart.destroy();
+    PieGraphQty = null;
+    PieGraphQty = document.getElementById('quantity');
+
+    if(PieChart) {
+      PieChart.destroy();
+    }
+    PieChart = PrintPie(PieGraphQty,data);
   }
-  PieChart = PrintPie(PieGraphQty,data);
+  else {
+    console.log('not refreshed');
+  }
 }
+
 LoadResource();
+setInterval(LoadResource,800);
 
 // main button events
 const LabelHeadings = document.querySelector("thead");

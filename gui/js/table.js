@@ -32,13 +32,13 @@ function PrintStats(CostOutput, QuantityOutput, data=null) {
 }
 
 class Table {
-  constructor(htmlTable, headings) {
+  constructor(htmlTable, headings, data=null) {
     this.table = htmlTable;
     this.thead = this.table.querySelector("thead");
     this.tbody = this.table.querySelector("tbody");
 
     this.headings = headings;
-    this.data = null;
+    this.data = data;
     this.selection = null;
     this.selected_tr = null;
 
@@ -51,7 +51,8 @@ class Table {
   }
 
   fillTable(data) {
-    try{      
+    this.data = data;
+    try{
       // clear
       this.tbody.innerHTML = "";
   
