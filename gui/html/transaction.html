@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="../css/text.css">
   <link rel="stylesheet" href="../css/transaction/layout.css">
   <link rel="stylesheet" href="../css/inventory/table.css">
+  <link rel="stylesheet" href="../css/gui-button.css">
 
   <script type="module" src="../js/transaction.js" defer></script>
 
@@ -24,7 +25,51 @@
     </div>
 
     <div class="transaction">
-      <h2>Transaction</h2>
+      <div class="panel1">
+        <h2>Transaction</h2>
+  
+        <div class="indiv">
+          <span class="inlbl">Selected Item</span>
+          <input class="in ro" id="selected-item" value="None" readonly>
+        </div>
+  
+        <div class="indiv">
+          <span class="inlbl">Filter</span>
+          <input class="in" id="filter" placeholder="Search an Item">
+        </div>
+  
+        <div class="indiv">
+          <span class="inlbl">Quantity</span>
+          <input class="in" id="selected-quantity" placeholder="Number of Items to add" type="number" required>
+        </div>
+  
+        <div class="gbtn cgreen"> Add Item</div>
+      </div>
+  
+      <div class="panel2">
+  
+        <div class="gbtn cred"> Remove Item</div>
+  
+        <div class="indiv">
+          <span class="inlbl">Total Price</span>
+          <input class="in ro" id="total-price" value="0.0" readonly>
+        </div>
+  
+        <div class="indiv">
+          <span class="inlbl">Payment</span>
+          <input class="in" id="payment" type="number" placeholder="customer's payment amount" required>
+        </div>
+  
+        <div class="gbtn cblue"> Calculate Change</div>
+  
+        <div class="indiv">
+          <span class="inlbl">Change</span>
+          <input class="in ro" id="change" value="0.0" readonly>
+        </div>
+  
+        <div class="gbtn cgreen"> Save Transcation</div>
+    
+      </div>
     </div>
 
     <div class="buy-table tblc">

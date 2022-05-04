@@ -1,30 +1,11 @@
-import { PrintStats, PrintPie, Table } from './table.js';
+import { PrintStats, PrintPie, Table, RefreshTable } from './table.js';
 
 let PieGraphQty, SelectedItemname = document.getElementById('selected-item');
 let PieChart = null;
 
 let InventoryTable = new Table(document.getElementById("inventory"),['Products','Class','Price','Quantity']);
 
-function RefreshTable(PreviousData, FetchData) {
-  if(PreviousData) {
-    if(PreviousData.length===FetchData.length) {
-      for(let i=0; i<PreviousData.length; i++) {
-        if(
-          PreviousData[i].itemname !== FetchData[i].itemname ||
-          PreviousData[i].class !== FetchData[i].class ||
-          PreviousData[i].quantity !== FetchData[i].quantity ||
-          PreviousData[i].price !== FetchData[i].price
-        ) {
-          return true;
-        }
-      }
-      return false;
-    }
-  }
-  return true;
-}
-
-async function LoadResource() {
+async function LoadInventory() {
   let response = await fetch("/data/inventory");
   let data = await response.json();
 
@@ -50,8 +31,8 @@ async function LoadResource() {
   }
 }
 
-LoadResource();
-setInterval(LoadResource,800);
+LoadInventory();
+setInterval(LoadInventory,800);
 
 // main button events
 const LabelHeadings = document.querySelector("thead");
@@ -183,7 +164,7 @@ addConfirm.addEventListener('click', event => {
         QuantityInput.value = '';
 
         // refresh the list
-        LoadResource();
+        LoadInventory();
 
         // close popup window
         ClosePopUp(AddPopUp);
@@ -243,7 +224,7 @@ editConfirm.addEventListener('click', event => {
         QuantityInput.value = '';
 
         // refresh the list
-        LoadResource();
+        LoadInventory();
 
         // close popup window
         ClosePopUp(EditPopUp);
@@ -270,7 +251,7 @@ deleteConfirm.addEventListener('click', event => {
       console.log('DELETE',data);
 
       // refresh the list
-      LoadResource();
+      LoadInventory();
 
       // close popup window
       ClosePopUp(DeletePopUp);

@@ -3,6 +3,7 @@
   margin: 0px;
   box-sizing: border-box;
   font-family: sans-serif, 'Fira Sans';
+  outline: none;
 }
 
 body{

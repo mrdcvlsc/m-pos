@@ -10,6 +10,25 @@ const CLASS = 1;
 const PRICE = 2;
 const QUANTITY = 3;
 
+function RefreshTable(PreviousData, FetchData) {
+  if(PreviousData) {
+    if(PreviousData.length===FetchData.length) {
+      for(let i=0; i<PreviousData.length; i++) {
+        if(
+          PreviousData[i].itemname !== FetchData[i].itemname ||
+          PreviousData[i].class !== FetchData[i].class ||
+          PreviousData[i].quantity !== FetchData[i].quantity ||
+          PreviousData[i].price !== FetchData[i].price
+        ) {
+          return true;
+        }
+      }
+      return false;
+    }
+  }
+  return true;
+}
+
 function PrintStats(CostOutput, QuantityOutput, data=null) {
   let CostSum = '₱0';
   let QuantitySum ='0x';
@@ -172,4 +191,4 @@ function PrintPie(canvas,data) {
 
   return PieChart;
 }
-export { PrintStats, PrintPie, Table };
+export { PrintStats, PrintPie, Table, RefreshTable };

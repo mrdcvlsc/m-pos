@@ -29,8 +29,8 @@
   box-shadow: 0.4em 0.4em 0.2em rgba(0, 0, 0, 0.096), 0.2em 0.2em 0.2em rgba(0, 0, 0, 0.247);
 }
 
-.gbtn > h2{
-  cursor: default;
+.gbtn{
+  cursor:pointer;
 }
 
 /* button colors and border */
