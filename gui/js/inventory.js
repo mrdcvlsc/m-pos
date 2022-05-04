@@ -1,64 +1,38 @@
-import { FillTable, PrintStats, PrintPie } from './load-table.js';
+import { PrintStats, PrintPie, Table, RefreshTable } from './table.js';
 
-let PieGraphQty, SelectedTR, SelectedItemname = document.getElementById('selected-item');
-let Selection = null, PieChart = null;
+let PieGraphQty, SelectedItemname = document.getElementById('selected-item');
+let PieChart = null;
 
-function UpdateTableRowEvents() {
-  let TableRows = Array.from(document.getElementsByTagName("tr"));
-  let Current;
-  for(let i=0; i<TableRows.length; ++i) {
-    TableRows[i].addEventListener('click', function(){
+let InventoryTable = new Table(document.getElementById("inventory"),['Products','Class','Price','Quantity']);
 
-      try{
-        Current.style.backgroundColor = '';
-        Current.style.color = '';
-        Current.style.outline = '';
-      }
-      catch(err){
-        console.log('Initial Selection');
-      }
-      
-      SelectedTR = this;
-      this.style.backgroundColor = 'rgb(7, 153, 153)';
-      this.style.color = 'white';
-      this.style.outline = '0.2em solid rgb(5, 185, 5)';
-      
-      Current = this;
-      
-      SelectedItemname.value = Current.querySelector('td').innerText;
-
-      let rowValues = Array.from(Current.children);
-
-      Selection = {
-        itemname : rowValues[0].innerText,
-        class : rowValues[1].innerText,
-        price : rowValues[2].innerText.replaceAll('₱',''),
-        quantity : rowValues[3].innerText.replaceAll('x','')
-      };
-    });
-  }
-}
-
-async function LoadResource() {
+async function LoadInventory() {
   let response = await fetch("/data/inventory");
   let data = await response.json();
 
-  let totalCost = document.getElementById("total-cost");
-  let totalQuantity = document.getElementById("total-quantity");
+  if(RefreshTable(InventoryTable.data,data)) {
 
-  FillTable(document.getElementById("inventory"),['Products','Class','Price','Quantity'],data);
-  PrintStats(totalCost,totalQuantity,data);
-  UpdateTableRowEvents();
+    let totalCost = document.getElementById("total-cost");
+    let totalQuantity = document.getElementById("total-quantity");
 
-  PieGraphQty = null;
-  PieGraphQty = document.getElementById('quantity');
+    InventoryTable.fillTable(data);
+    PrintStats(totalCost,totalQuantity,data);
+    InventoryTable.enableSelection(SelectedItemname);
 
-  if(PieChart) {
-    PieChart.destroy();
+    PieGraphQty = null;
+    PieGraphQty = document.getElementById('quantity');
+
+    if(PieChart) {
+      PieChart.destroy();
+    }
+    PieChart = PrintPie(PieGraphQty,data);
   }
-  PieChart = PrintPie(PieGraphQty,data);
+  else {
+    console.log('not refreshed');
+  }
 }
-LoadResource();
+
+LoadInventory();
+setInterval(LoadInventory,800);
 
 // main button events
 const LabelHeadings = document.querySelector("thead");
@@ -85,13 +59,13 @@ function ClosePopUp(ShowPopUpBox) {
   PieGraphQty.style.display = 'block';
   ShowPopUpBox.style.display = 'none';
 
-  Selection = null;
+  InventoryTable.selection = null;
   SelectedItemname.value = 'None';
 
   try{
-    SelectedTR.style.backgroundColor = '';
-    SelectedTR.style.color = '';
-    SelectedTR.style.outline = '';
+    InventoryTable.selected_tr.style.backgroundColor = '';
+    InventoryTable.selected_tr.style.color = '';
+    InventoryTable.selected_tr.style.outline = '';
   }
   catch(err) {
     console.log('ClosePopUp() : No rows selected yet to be clear');
@@ -104,17 +78,17 @@ AddButton.addEventListener('click', event => {
 
 EditButton.addEventListener('click', event => {
 
-  if(Selection) {
+  if(InventoryTable.selection) {
 
     let ItemNameInput = EditPopUp.querySelector("#edit-itemname");
     let ClassInput = EditPopUp.querySelector("#edit-class");
     let PriceInput = EditPopUp.querySelector("#edit-price");
     let QuantityInput = EditPopUp.querySelector("#edit-quantity");
     
-    ItemNameInput.value = Selection.itemname;
-    ClassInput.value = Selection.class;
-    PriceInput.value = Selection.price;
-    QuantityInput.value = Selection.quantity;
+    ItemNameInput.value = InventoryTable.selection.itemname;
+    ClassInput.value = InventoryTable.selection.class;
+    PriceInput.value = InventoryTable.selection.price;
+    QuantityInput.value = InventoryTable.selection.quantity;
 
     DisplayPopUp(EditPopUp);
   }
@@ -124,9 +98,9 @@ EditButton.addEventListener('click', event => {
 });
 
 DeleteButton.addEventListener('click', event => {
-  if(Selection) {
+  if(InventoryTable.selection) {
     let ItemName = document.getElementById('del-name');
-    ItemName.innerText = `Remove "${Selection.itemname}" from the inventory?`;
+    ItemName.innerText = `Remove "${InventoryTable.selection.itemname}" from the inventory?`;
     DisplayPopUp(DeletePopUp);
   }
   else {
@@ -190,7 +164,7 @@ addConfirm.addEventListener('click', event => {
         QuantityInput.value = '';
 
         // refresh the list
-        LoadResource();
+        LoadInventory();
 
         // close popup window
         ClosePopUp(AddPopUp);
@@ -227,7 +201,7 @@ editConfirm.addEventListener('click', event => {
   else { // requirements meet
 
     // send put request
-    fetch(`/data/inventory/${Selection.itemname.replaceAll(' ','&+')}`, {
+    fetch(`/data/inventory/${InventoryTable.selection.itemname.replaceAll(' ','&+')}`, {
       headers: {
         // 'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -250,7 +224,7 @@ editConfirm.addEventListener('click', event => {
         QuantityInput.value = '';
 
         // refresh the list
-        LoadResource();
+        LoadInventory();
 
         // close popup window
         ClosePopUp(EditPopUp);
@@ -267,7 +241,7 @@ editCancle.addEventListener('click', event => {
 
 deleteConfirm.addEventListener('click', event => {
 
-  fetch(`/data/inventory/${Selection.itemname.replaceAll(' ','&+')}`, {
+  fetch(`/data/inventory/${InventoryTable.selection.itemname.replaceAll(' ','&+')}`, {
     headers: {
       'Content-Type': 'application/json'
     },
@@ -277,7 +251,7 @@ deleteConfirm.addEventListener('click', event => {
       console.log('DELETE',data);
 
       // refresh the list
-      LoadResource();
+      LoadInventory();
 
       // close popup window
       ClosePopUp(DeletePopUp);
