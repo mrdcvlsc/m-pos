@@ -11,7 +11,7 @@
     font-size: smaller;
   }
 
-  .canvas-container, .goback{
+  .canvas-container{
     display: none;
   }
 
@@ -26,8 +26,8 @@
   }
 
   .gbtn{
-    height: 1em;
-    padding: 1.6em 1em;
+    height: 3em;
+    padding: 1.6em 3em;
     font-size: 0.75em;
   }
 
