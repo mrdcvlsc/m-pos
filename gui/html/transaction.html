@@ -43,15 +43,15 @@
   
         <div class="indiv">
           <span class="inlbl">Quantity</span>
-          <input class="in" id="selected-quantity" placeholder="Number of Items to add" type="number" required>
+          <input class="in" id="selected-quantity" value="0" placeholder="Number of Items to add" type="number" required>
         </div>
   
-        <div class="gbtn cgreen"> Add Item</div>
+        <div class="gbtn cgreen abtn"> Add Item</div>
       </div>
   
       <div class="panel2">
   
-        <div class="gbtn cred"> Remove Item</div>
+        <div class="gbtn cred rbtn"> Remove Item</div>
   
         <div class="indiv">
           <span class="inlbl">Total Price</span>
@@ -60,25 +60,25 @@
   
         <div class="indiv">
           <span class="inlbl">Payment</span>
-          <input class="in" id="payment" type="number" placeholder="customer's payment amount" required>
+          <input class="in" id="payment" value="0.0" type="number" placeholder="customer's payment amount" required>
         </div>
   
-        <div class="gbtn cblue"> Calculate Change</div>
+        <div class="gbtn cblue cbtn"> Calculate Change</div>
   
         <div class="indiv">
           <span class="inlbl">Change</span>
           <input class="in ro" id="change" value="0.0" readonly>
         </div>
   
-        <div class="gbtn cgreen"> Save Transcation</div>
+        <div class="gbtn cgreen sbtn"> Save Transcation</div>
     
       </div>
     </div>
 
     <div class="buy-table tblc">
+      <h2>Products to be Sold</h2>
       <table id="chosen">
-        <h2>Products to be Sold</h2>
-        <th>Products</th><th>Class</th><th>Price</th><th>Quantity</th>
+        <thead></thead>
         <tbody></tbody>
       </table>
     </div>
