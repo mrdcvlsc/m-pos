@@ -1,9 +1,13 @@
 import { Table, RefreshTable } from './table.js';
 
+let InValSelectedItem = document.getElementById('selected-item');
+let InValSelectedQuantity = document.getElementById('selected-quantity');
+let InValFilter = document.getElementById('filter');
+
+let InValTotalPrice = document.getElementById('total-price');
+
 let InventoryTable = new Table(document.getElementById("inventory"),['Products','Class','Price','Quantity']);
 let BuyTable       = new Table(document.getElementById("chosen")   ,['Products','Class','Price','Quantity']);
-
-let SelectedItemname = document.getElementById('selected-item');
 
 async function LoadInventory() {
   let response = await fetch("/data/inventory");
@@ -11,7 +15,7 @@ async function LoadInventory() {
 
   if(RefreshTable(InventoryTable.data,data)) {
     InventoryTable.fillTable(data);
-    InventoryTable.enableSelection(SelectedItemname);
+    InventoryTable.enableSelection(InValSelectedItem);
   }
 }
 
@@ -35,13 +39,13 @@ document.querySelector('.abtn').addEventListener('click', ()=> {
     alert('Select an Item First in the Available Products Table');
   }
   else if(
-    document.getElementById('selected-quantity').value=='0' ||
-    document.getElementById('selected-quantity').value=='') {
+    InValSelectedQuantity.value=='0' ||
+    InValSelectedQuantity.value=='') {
     alert('Input a Quantity First');
   }
   else {
     // Add Item Action
-    let quantity = document.getElementById('selected-quantity').value;
+    let quantity = InValSelectedQuantity.value;
     let DeductedQuantity = InventoryTable.data[InventoryTable.selected_index].quantity - quantity;
     
     if(DeductedQuantity < 0) {
@@ -76,6 +80,17 @@ document.querySelector('.abtn').addEventListener('click', ()=> {
 
           BuyTable.fillTable(BuyTable.data);
           BuyTable.enableSelection();
+
+          InValFilter.value = '';
+          InValSelectedItem.value = 'None';
+          InValSelectedQuantity.value = 0;
+          
+          let CurrentTotal = 0;
+          for(let i=0; i<BuyTable.data.length; ++i) {
+            CurrentTotal += BuyTable.data[i].price * BuyTable.data[i].quantity;
+          }
+
+          InValTotalPrice.value = `₱${CurrentTotal}`;
         });
       }).catch(function (error) {
         console.error('ERROR in : transaction>subtract item quantity>fetch()\n',error);
@@ -112,6 +127,13 @@ document.querySelector('.rbtn').addEventListener('click', ()=> {
         BuyTable.fillTable(BuyTable.data);
         BuyTable.enableSelection();
         BuyTable.selected_tr = null;
+
+        let CurrentTotal = 0;
+          for(let i=0; i<BuyTable.data.length; ++i) {
+            CurrentTotal += BuyTable.data[i].price * BuyTable.data[i].quantity;
+          }
+
+          InValTotalPrice.value = `₱${CurrentTotal}`;
       });
     }).catch(function (error) {
       console.error('ERROR in : transaction>re-add item quantity>fetch()\n',error);
