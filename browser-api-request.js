@@ -40,6 +40,40 @@ fetch('/data/inventory/Spandals&+SUPER-XXXL', {
   console.error(error);
 });
 
+// ADD QUANTITY
+fetch('/data/inventory/add-qty/Blue-Shirt', {
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  method: 'put',
+  body: JSON.stringify({
+    "quantity": 1
+  })
+}).then(function (response) {
+  response.json().then(function (data) {
+    console.log('ADDED QUANTITY',data);
+  });
+}).catch(function (error) {
+  console.error(error);
+});
+
+// SUB QUANTITY
+fetch('/data/inventory/sub-qty/Blue-Shirt', {
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  method: 'put',
+  body: JSON.stringify({
+    "quantity": 1
+  })
+}).then(function (response) {
+  response.json().then(function (data) {
+    console.log('SUBTRACTED QUANTITY',data);
+  });
+}).catch(function (error) {
+  console.error(error);
+});
+
 // DELETE
 fetch('/data/inventory/Spandals&+SUPER-XXXLL', {
   headers: {

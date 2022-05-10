@@ -1,4 +1,4 @@
-const { getAllItems, addItem, deleteItem, updateItem } = require('../controllers/items');
+const { getAllItems, addItem, deleteItem, updateItem, addQuantity, subQuantity } = require('../controllers/items');
 
 let insertStatement, updateStatement, deleteStatement, readStatement;
 
@@ -76,12 +76,56 @@ const UpdateItemOption = {
   handler: updateItem
 }
 
-async function api(fastify, options) {
+const AddQtyOption = {
+  schema: {
+    body: {
+      type: 'object',
+      required: ['quantity'],
+      properties: {
+        quantity: { type: 'number' }
+      }
+    },
+    response: {
+      200: {
+        type: 'object',
+        properties: {
+          changes: { type: 'number' }
+        }
+      }
+    }
+  },
+  handler: addQuantity
+}
 
+const SubQtyOption = {
+  schema: {
+    body: {
+      type: 'object',
+      required: ['quantity'],
+      properties: {
+        quantity: { type: 'number' }
+      }
+    },
+    response: {
+      200: {
+        type: 'object',
+        properties: {
+          changes: { type: 'number' }
+        }
+      }
+    }
+  },
+  handler: subQuantity
+}
+
+async function api(fastify, options) {
   fastify.get('/data/inventory', RetreiveInventory);
   fastify.post('/data/inventory', PostItemOption);
   fastify.delete('/data/inventory/:itemname', DeleteItemOption);
   fastify.put('/data/inventory/:itemname', UpdateItemOption);
+  
+  fastify.put('/data/inventory/add-qty/:itemname',AddQtyOption);
+  fastify.put('/data/inventory/sub-qty/:itemname',SubQtyOption);
 }
 
 module.exports = api;

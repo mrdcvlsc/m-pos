@@ -3,10 +3,12 @@ const { InventoryDB, ErrorHandler } = require('./database');
 
 try {
   InventoryDB.initialize(db,'inventory');
-  insertStatement = db.prepare(InventoryDB.StmTemp.INSERT);
-  updateStatement = db.prepare(InventoryDB.StmTemp.UPDATE);
-  deleteStatement = db.prepare(InventoryDB.StmTemp.DELETE);
-  readStatement = db.prepare(InventoryDB.StmTemp.READ);
+  var insertStatement = db.prepare(InventoryDB.StmTemp.INSERT);
+  var updateStatement = db.prepare(InventoryDB.StmTemp.UPDATE);
+  var deleteStatement = db.prepare(InventoryDB.StmTemp.DELETE);
+  var readStatement   = db.prepare(InventoryDB.StmTemp.READ);
+  var addQtyStatement = db.prepare(InventoryDB.StmTemp.ADDQUANTITY);
+  var subQtyStatement = db.prepare(InventoryDB.StmTemp.SUBQUANTITY);
 }
 catch(err) {
   ErrorHandler(err, 'Initial');
@@ -57,9 +59,41 @@ const updateItem = (request, reply) => {
   reply.send(queryResult);
 }
 
+const addQuantity = (request, reply) => {
+  let { itemname } = request.params;
+  let AdditionalQuantity = request.body;
+
+  itemname = itemname.replaceAll('&+',' ');
+
+  let queryResult = InventoryDB.addQty(
+    addQtyStatement,
+    AdditionalQuantity.quantity,
+    itemname
+  );
+
+  reply.send(queryResult);
+}
+
+const subQuantity = (request, reply) => {
+  let { itemname } = request.params;
+  let SubtractedQuantity = request.body;
+
+  itemname = itemname.replaceAll('&+',' ');
+
+  let queryResult = InventoryDB.subQty(
+    subQtyStatement,
+    SubtractedQuantity.quantity,
+    itemname
+  );
+
+  reply.send(queryResult);
+}
+
 module.exports = {
   getAllItems,
   addItem,
   deleteItem,
-  updateItem
+  updateItem,
+  addQuantity,
+  subQuantity
 }

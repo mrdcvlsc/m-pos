@@ -12,7 +12,9 @@ const InventoryDB = {
     INSERT : `INSERT INTO inventory (itemname, class, price, quantity) VALUES (?, ?, ?, ?)`,
     READ : `SELECT * FROM inventory`,
     DELETE : `DELETE FROM inventory WHERE itemname = ?`,
-    UPDATE : `UPDATE inventory SET itemname = ?, class = ?, price = ?, quantity = ? WHERE itemname = ?`
+    UPDATE : `UPDATE inventory SET itemname = ?, class = ?, price = ?, quantity = ? WHERE itemname = ?`,
+    ADDQUANTITY : `UPDATE inventory SET quantity = quantity + ? WHERE itemname = ?`,
+    SUBQUANTITY : `UPDATE inventory SET quantity = quantity - ? WHERE itemname = ?`
   },
 
   initialize : function(db, inventoryName) {
@@ -98,6 +100,30 @@ const InventoryDB = {
       return false;
     }
     return true;
+  },
+
+  addQty : function(addStatement, Quantity, Product) {
+    let result;
+    try {
+      result = addStatement.run(Quantity, Product);
+    }
+    catch(err) {
+      ErrorHandler(err,'add quantity');
+      return { changes: 0 };
+    }
+    return { changes: result.changes };
+  },
+
+  subQty : function(subStatement, Quantity, Product) {
+    let result;
+    try {
+      result = subStatement.run(Quantity, Product);
+    }
+    catch(err) {
+      ErrorHandler(err,'sub quantity');
+      return { changes: 0 };
+    }
+    return { changes: result.changes };
   }
 }
 
