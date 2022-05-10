@@ -5,9 +5,13 @@ let InValSelectedQuantity = document.getElementById('selected-quantity');
 let InValFilter = document.getElementById('filter');
 
 let InValTotalPrice = document.getElementById('total-price');
+let InValPayment = document.getElementById('payment');
+let InValChange = document.getElementById('change');
 
 let InventoryTable = new Table(document.getElementById("inventory"),['Products','Class','Price','Quantity']);
 let BuyTable       = new Table(document.getElementById("chosen")   ,['Products','Class','Price','Quantity']);
+
+var CanBeSaved = false;
 
 async function LoadInventory() {
   let response = await fetch("/data/inventory");
@@ -129,9 +133,9 @@ document.querySelector('.rbtn').addEventListener('click', ()=> {
         BuyTable.selected_tr = null;
 
         let CurrentTotal = 0;
-          for(let i=0; i<BuyTable.data.length; ++i) {
-            CurrentTotal += BuyTable.data[i].price * BuyTable.data[i].quantity;
-          }
+        for(let i=0; i<BuyTable.data.length; ++i) {
+          CurrentTotal += BuyTable.data[i].price * BuyTable.data[i].quantity;
+        }
 
           InValTotalPrice.value = `₱${CurrentTotal}`;
       });
@@ -143,25 +147,43 @@ document.querySelector('.rbtn').addEventListener('click', ()=> {
 
 // Calculate Change
 document.querySelector('.cbtn').addEventListener('click', ()=> {
-  if(
+
+  let CurrentTotal = 0;
+  for(let i=0; i<BuyTable.data.length; ++i) {
+    CurrentTotal += BuyTable.data[i].price * BuyTable.data[i].quantity;
+  }
+
+  // convert payment
+  let Payment = InValPayment.value;
+
+  if(BuyTable.data.length<1) {
+    alert('No Items to Buy : Add an item first');
+  }
+  else if(
     document.getElementById('payment').value=='0.0' ||
     document.getElementById('payment').value=='0' ||
     document.getElementById('payment').value==''
   ) {
-    alert('Input a payment amount first');
+    alert('No payment Value : Input a payment amount first');
+  }
+  else if(CurrentTotal>Payment) {
+    alert('Payment is not enough');
   }
   else {
     // Calculate Change Action
+    let ChangeAmount = Payment - CurrentTotal;
+    InValChange.value = `₱${ChangeAmount}`;
+    CanBeSaved = true;
   }
 });
 
 // Save Transactions
 document.querySelector('.sbtn').addEventListener('click', ()=> {
-  if(BuyTable.data.length>0) {
+  if(BuyTable.data.length>0 && CanBeSaved) {
     // Save Transaction Action
   }
   else {
-    alert('Fill the Product to be sold table first');
+    alert('Fill the Product to be sold and calculate change');
   }
 });
 
