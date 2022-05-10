@@ -55,18 +55,15 @@ document.querySelector('.abtn').addEventListener('click', ()=> {
         "price": InventoryTable.data[InventoryTable.selected_index].price,
         "quantity": quantity
       });
-
-      // update database - subtract quantity
-      fetch(`/data/inventory/${InventoryTable.data[InventoryTable.selected_index].itemname.replaceAll(' ','&+')}`, {
+      
+      // subtract quantity to the database
+      fetch(`/data/inventory/sub-qty/${InventoryTable.data[InventoryTable.selected_index].itemname.replaceAll(' ','&+')}`, {
         headers: {
           'Content-Type': 'application/json'
         },
         method: 'put',
         body: JSON.stringify({
-          "itemname": InventoryTable.data[InventoryTable.selected_index].itemname,
-          "class": InventoryTable.data[InventoryTable.selected_index].class,
-          "price": InventoryTable.data[InventoryTable.selected_index].price,
-          "quantity": DeductedQuantity
+          "quantity": quantity
         })
       }).then(function (response) {
         response.json().then(function (data) {
@@ -81,7 +78,7 @@ document.querySelector('.abtn').addEventListener('click', ()=> {
           BuyTable.enableSelection();
         });
       }).catch(function (error) {
-        console.error('ERROR in : Edit>Confirm>fetch()\n',error);
+        console.error('ERROR in : transaction>subtract item quantity>fetch()\n',error);
       });
     }
   }
@@ -93,18 +90,14 @@ document.querySelector('.rbtn').addEventListener('click', ()=> {
     alert('Select an Item First to be Removed in the Products to be Sold Table');
   }
   else {
-    // Re-Add the item in the database
-    // update database - subtract quantity
-    fetch(`/data/inventory/${BuyTable.data[BuyTable.selected_index].itemname.replaceAll(' ','&+')}`, {
+    // Re-Add the quantity in the database    
+    fetch(`/data/inventory/add-qty/${BuyTable.data[BuyTable.selected_index].itemname.replaceAll(' ','&+')}`, {
       headers: {
         'Content-Type': 'application/json'
       },
       method: 'put',
       body: JSON.stringify({
-        "itemname": BuyTable.data[BuyTable.selected_index].itemname,
-        "class": BuyTable.data[BuyTable.selected_index].class,
-        "price": BuyTable.data[BuyTable.selected_index].price,
-        "quantity": DeductedQuantity
+        "quantity": BuyTable.data[BuyTable.selected_index].quantity
       })
     }).then(function (response) {
       response.json().then(function (data) {
@@ -121,7 +114,7 @@ document.querySelector('.rbtn').addEventListener('click', ()=> {
         BuyTable.selected_tr = null;
       });
     }).catch(function (error) {
-      console.error('ERROR in : Edit>Confirm>fetch()\n',error);
+      console.error('ERROR in : transaction>re-add item quantity>fetch()\n',error);
     });
   }
 });
