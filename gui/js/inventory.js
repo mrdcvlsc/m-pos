@@ -32,7 +32,7 @@ async function LoadInventory() {
 }
 
 LoadInventory();
-setInterval(LoadInventory,800);
+setInterval(LoadInventory,1600);
 
 // main button events
 const LabelHeadings = document.querySelector("thead");

@@ -24,7 +24,7 @@ async function LoadInventory() {
 }
 
 LoadInventory();
-setInterval(LoadInventory,800);
+setInterval(LoadInventory,1600);
 
 // Filter Items
 let Filter = null;
