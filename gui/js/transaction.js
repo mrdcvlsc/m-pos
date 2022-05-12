@@ -79,7 +79,7 @@ document.querySelector('.abtn').addEventListener('click', ()=> {
 
           // rerender tables
           InventoryTable.fillTable(InventoryTable.data);
-          InventoryTable.enableSelection();
+          InventoryTable.enableSelection(InValSelectedItem);
           InventoryTable.selected_tr = null;
 
           BuyTable.fillTable(BuyTable.data);
@@ -124,7 +124,7 @@ document.querySelector('.rbtn').addEventListener('click', ()=> {
 
         // rerender tables
         InventoryTable.fillTable(InventoryTable.data);
-        InventoryTable.enableSelection();
+        InventoryTable.enableSelection(InValSelectedItem);
         InventoryTable.selected_tr = null;
 
         BuyTable.data.splice(BuyTable.selected_index,1);
