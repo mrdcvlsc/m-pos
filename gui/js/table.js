@@ -143,39 +143,6 @@ class Table {
         TableSetSelection(itself,selected,this,i);
       });
     }
-
-    // for(let tr of tr_array) {
-    //   tr.addEventListener('click', function(){
-    //     try{
-    //       previous_tr.style.backgroundColor = '';
-    //       previous_tr.style.color = '';
-    //       previous_tr.style.outline = '';
-    //     }
-    //     catch(err){
-    //       console.log('Initial Selection');
-    //     }
-        
-    //     this.style.backgroundColor = 'rgb(7, 153, 153)';
-    //     this.style.color = 'white';
-    //     this.style.outline = '0.2em solid rgb(5, 185, 5)';
-        
-    //     previous_tr = this;
-        
-    //     if(input)
-    //       input.value = previous_tr.querySelector('td').innerText;
-  
-    //     let rowValues = Array.from(previous_tr.children);
-  
-    //     let selected = {
-    //       itemname : rowValues[0].innerText,
-    //       class : rowValues[1].innerText,
-    //       price : rowValues[2].innerText.replaceAll('₱',''),
-    //       quantity : rowValues[3].innerText.replaceAll('x','')
-    //     };
-
-    //     TableSetSelection(itself,selected,this);
-    //   });
-    // }
   }
 }
 
