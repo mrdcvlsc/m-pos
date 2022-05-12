@@ -137,7 +137,7 @@ document.querySelector('.rbtn').addEventListener('click', ()=> {
           CurrentTotal += BuyTable.data[i].price * BuyTable.data[i].quantity;
         }
 
-          InValTotalPrice.value = `₱${CurrentTotal}`;
+        InValTotalPrice.value = `₱${CurrentTotal}`;
       });
     }).catch(function (error) {
       console.error('ERROR in : transaction>re-add item quantity>fetch()\n',error);
@@ -160,9 +160,9 @@ document.querySelector('.cbtn').addEventListener('click', ()=> {
     alert('No Items to Buy : Add an item first');
   }
   else if(
-    document.getElementById('payment').value=='0.0' ||
-    document.getElementById('payment').value=='0' ||
-    document.getElementById('payment').value==''
+    InValPayment.value=='0.0' ||
+    InValPayment.value=='0' ||
+    InValPayment.value==''
   ) {
     alert('No payment Value : Input a payment amount first');
   }
