@@ -26,6 +26,31 @@ async function LoadInventory() {
 LoadInventory();
 setInterval(LoadInventory,1600);
 
+function ResetPanelA() {
+  InventoryTable.fillTable(InventoryTable.data);
+  InventoryTable.enableSelection(InValSelectedItem);
+  InventoryTable.selected_tr = null;
+
+  InValFilter.value = '';
+  InValSelectedItem.value = 'None';
+  InValSelectedQuantity.value = 0;
+}
+
+function ResetPanelB() {
+  BuyTable.fillTable(BuyTable.data);
+  BuyTable.enableSelection();
+  BuyTable.selected_tr = null;
+  
+  let CurrentTotal = 0;
+  for(let i=0; i<BuyTable.data.length; ++i) {
+    CurrentTotal += BuyTable.data[i].price * BuyTable.data[i].quantity;
+  }
+
+  InValTotalPrice.value = `₱${CurrentTotal}`;
+
+  CanBeSaved = false;
+}
+
 // Filter Items
 let Filter = null;
 document.getElementById('filter').addEventListener('input', ()=> {
@@ -78,23 +103,8 @@ document.querySelector('.abtn').addEventListener('click', ()=> {
           console.log('Transaction Quantity Subtracted',data);
 
           // rerender tables
-          InventoryTable.fillTable(InventoryTable.data);
-          InventoryTable.enableSelection(InValSelectedItem);
-          InventoryTable.selected_tr = null;
-
-          BuyTable.fillTable(BuyTable.data);
-          BuyTable.enableSelection();
-
-          InValFilter.value = '';
-          InValSelectedItem.value = 'None';
-          InValSelectedQuantity.value = 0;
-          
-          let CurrentTotal = 0;
-          for(let i=0; i<BuyTable.data.length; ++i) {
-            CurrentTotal += BuyTable.data[i].price * BuyTable.data[i].quantity;
-          }
-
-          InValTotalPrice.value = `₱${CurrentTotal}`;
+          ResetPanelA();
+          ResetPanelB();
         });
       }).catch(function (error) {
         console.error('ERROR in : transaction>subtract item quantity>fetch()\n',error);
@@ -123,21 +133,10 @@ document.querySelector('.rbtn').addEventListener('click', ()=> {
         console.log('Transaction Quantity Readded',data);
 
         // rerender tables
-        InventoryTable.fillTable(InventoryTable.data);
-        InventoryTable.enableSelection(InValSelectedItem);
-        InventoryTable.selected_tr = null;
+        ResetPanelA();
 
         BuyTable.data.splice(BuyTable.selected_index,1);
-        BuyTable.fillTable(BuyTable.data);
-        BuyTable.enableSelection();
-        BuyTable.selected_tr = null;
-
-        let CurrentTotal = 0;
-        for(let i=0; i<BuyTable.data.length; ++i) {
-          CurrentTotal += BuyTable.data[i].price * BuyTable.data[i].quantity;
-        }
-
-        InValTotalPrice.value = `₱${CurrentTotal}`;
+        ResetPanelB();
       });
     }).catch(function (error) {
       console.error('ERROR in : transaction>re-add item quantity>fetch()\n',error);
@@ -179,11 +178,14 @@ document.querySelector('.cbtn').addEventListener('click', ()=> {
 
 // Save Transactions
 document.querySelector('.sbtn').addEventListener('click', ()=> {
-  if(BuyTable.data.length>0 && CanBeSaved) {
-    // Save Transaction Action
+  if(BuyTable.data.length<=0) {
+    alert('No products in the "Products To be Sold" table : Add a product first');
+  }
+  else if(!CanBeSaved){
+    alert('Calculate Change first');
   }
   else {
-    alert('Fill the Product to be sold and calculate change');
+    
   }
 });
 
