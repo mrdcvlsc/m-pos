@@ -3,6 +3,7 @@ const { InventoryDB, ErrorHandler } = require('./database');
 
 try {
   InventoryDB.initialize(db,'inventory');
+  InventoryDB.init_transactions(db,'transactions');
   var insertStatement = db.prepare(InventoryDB.StmTemp.INSERT);
   var updateStatement = db.prepare(InventoryDB.StmTemp.UPDATE);
   var deleteStatement = db.prepare(InventoryDB.StmTemp.DELETE);

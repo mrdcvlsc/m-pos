@@ -35,6 +35,24 @@ const InventoryDB = {
     return true;
   },
 
+  init_transactions : function(db, transactionTableName) {
+    try{
+      db.exec(`
+        CREATE TABLE ${transactionTableName} (
+          buydata DATE NOT NULL,
+          itemname TEXT NOT NULL,
+          price REAL NOT NULL,
+          quantity INTEGER NOT NULL
+        )`
+      );
+    }
+    catch(err) {
+      ErrorHandler(err,'init_transactions');
+      return false;
+    }
+    return true;
+  },
+
   insertRow : function(insertStatement, Product, Class, Price, Quantity) {
     let result;
     try {

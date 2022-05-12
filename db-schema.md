@@ -11,9 +11,9 @@
 -----
 
 ## transactions
-| Row Name | Data Type |      Properties      |
-| :------: | :-------: | :------------------: |
-| buydate  |   DATE    |       NOT NULL       |
-| itemname |   TEXT    |       NOT NULL       |
-|  price   |   REAL    |       NOT NULL       |
-| quantity |  INTEGER  |       NOT NULL       |
+| Row Name | Data Type |   Properties   |
+| :------: | :-------: | :------------: |
+| buydate  |   DATE    |    NOT NULL    |
+| itemname |   TEXT    |    NOT NULL    |
+|  price   |   REAL    |    NOT NULL    |
+| quantity |  INTEGER  |    NOT NULL    |
