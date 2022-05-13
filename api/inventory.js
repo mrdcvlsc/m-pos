@@ -1,10 +1,25 @@
-const { getAllItems, addItem, deleteItem, updateItem, addQuantity, subQuantity } = require('../controllers/items');
+const {
+  getAllItems,  addItem,  deleteItem,   updateItem,
+  addQuantity,  subQuantity,  recordTransactionInfo,
+  getTransactionBetween
+} = require('../controllers/items');
 
 let insertStatement, updateStatement, deleteStatement, readStatement;
 
 const Item = {
   type: 'object',
   properties: {
+    itemname: { type: 'string' },
+    class: { type: 'string' },
+    price: { type: 'number' },
+    quantity: { type: 'number' }
+  }
+}
+
+const TransactItem = {
+  type: 'object',
+  properties: {
+    buydate: { type: 'string' },
     itemname: { type: 'string' },
     class: { type: 'string' },
     price: { type: 'number' },
@@ -118,6 +133,37 @@ const SubQtyOption = {
   handler: subQuantity
 }
 
+const RecordTransactionOption = {
+  schema: {
+    body: {
+      type: 'object',
+      required: ['buydate', 'itemname', 'class', 'price', 'quantity'],
+      properties: TransactItem.properties
+    },
+    response: {
+      201: {
+        type: 'object',
+        properties: {
+          changes: { type: 'number' }
+        }
+      }
+    }
+  },
+  handler: recordTransactionInfo
+}
+
+const GetTransactionOption = {
+  schema: {
+    response: {
+      200: {
+        type: 'array',
+        items: TransactItem
+      }
+    }
+  },
+  handler: getTransactionBetween
+}
+
 async function api(fastify, options) {
   fastify.get('/data/inventory', RetreiveInventory);
   fastify.post('/data/inventory', PostItemOption);
@@ -126,6 +172,9 @@ async function api(fastify, options) {
   
   fastify.put('/data/inventory/add-qty/:itemname',AddQtyOption);
   fastify.put('/data/inventory/sub-qty/:itemname',SubQtyOption);
+
+  fastify.post('/data/transactions', RecordTransactionOption);
+  fastify.get ('/data/transactions/:startdate/:enddate', GetTransactionOption);
 }
 
 module.exports = api;

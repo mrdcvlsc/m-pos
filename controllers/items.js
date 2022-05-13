@@ -10,6 +10,8 @@ try {
   var readStatement   = db.prepare(InventoryDB.StmTemp.READ);
   var addQtyStatement = db.prepare(InventoryDB.StmTemp.ADDQUANTITY);
   var subQtyStatement = db.prepare(InventoryDB.StmTemp.SUBQUANTITY);
+  var recTrnStatement = db.prepare(InventoryDB.StmTemp.RECORDTRANSACTION);
+  var getRecStatement = db.prepare(InventoryDB.StmTemp.GET_TRANSACTIONS);
 }
 catch(err) {
   ErrorHandler(err, 'Initial');
@@ -90,11 +92,39 @@ const subQuantity = (request, reply) => {
   reply.send(queryResult);
 }
 
+const recordTransactionInfo = (request, reply) => {
+  let item = request.body;
+  console.log('TRANSACTIONS - POST REQUEST :',item);
+  let queryResult = InventoryDB.recordTransaction(
+    recTrnStatement,
+    item.buydate,
+    item.itemname,
+    item.class,
+    item.price,
+    item.quantity
+  );
+  
+  reply.code(201).send(queryResult);
+}
+
+const getTransactionBetween = (request,reply) => {
+  let date = request.params;
+  console.log('TRANSACTIONS - GET REQUEST :',date);
+  let transactions = InventoryDB.getTransactions(
+    getRecStatement,
+    date.startdate,
+    date.enddate
+  );
+  reply.send(transactions);
+}
+
 module.exports = {
   getAllItems,
   addItem,
   deleteItem,
   updateItem,
   addQuantity,
-  subQuantity
+  subQuantity,
+  recordTransactionInfo,
+  getTransactionBetween
 }

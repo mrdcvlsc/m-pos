@@ -88,3 +88,31 @@ fetch('/data/inventory/Spandals&+SUPER-XXXLL', {
 }).catch(function (error) {
   console.error(error);
 });
+
+
+
+
+
+// TRANSACTIONS
+
+// POST
+fetch('/data/transactions', {
+  headers: {
+    // 'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  },
+  method: 'post',
+  body: JSON.stringify({
+    "buydate": "2022-05-13T06:17:59.751Z",
+    "itemname": "From Browser",
+    "class": "Test Data",
+    "price": 10,
+    "quantity": 2
+  })
+}).then(function (response) {
+  response.json().then(function (data) {
+    console.log(data);
+  });
+}).catch(function (error) {
+  console.error(error);
+});

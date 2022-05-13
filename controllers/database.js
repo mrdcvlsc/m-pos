@@ -15,7 +15,8 @@ const InventoryDB = {
     UPDATE : `UPDATE inventory SET itemname = ?, class = ?, price = ?, quantity = ? WHERE itemname = ?`,
     ADDQUANTITY : `UPDATE inventory SET quantity = quantity + ? WHERE itemname = ?`,
     SUBQUANTITY : `UPDATE inventory SET quantity = quantity - ? WHERE itemname = ?`,
-    RECORDTRANSACTION : `INSERT INTO transactions (buydate, itemname, class, price, quantity) VALUES (?, ?, ?, ?, ?)`
+    RECORDTRANSACTION : `INSERT INTO transactions (buydate, itemname, class, price, quantity) VALUES (?, ?, ?, ?, ?)`,
+    GET_TRANSACTIONS : 'SELECT * FROM transactions WHERE DATETIME(buydate) BETWEEN DATETIME(?) AND DATETIME(?)'
   },
 
   initialize : function(db, inventoryName) {
@@ -40,7 +41,7 @@ const InventoryDB = {
     try{
       db.exec(`
         CREATE TABLE ${transactionTableName} (
-          buydate DATE NOT NULL,
+          buydate DATETIME NOT NULL,
           itemname TEXT NOT NULL,
           class TEXT NOT NULL,
           price REAL NOT NULL,
@@ -144,6 +145,43 @@ const InventoryDB = {
       return { changes: 0 };
     }
     return { changes: result.changes };
+  },
+
+  recordTransaction : function(rcrdTrnsctnStatement, BuyDate, Product, Class, Price, Quantity) {
+    let result;
+    try {
+      result = rcrdTrnsctnStatement.run(BuyDate, Product, Class, Price, Quantity);
+    }
+    catch(err) {
+      ErrorHandler(err,'recordTransaction');
+      return { changes: 0 };
+    }
+    return { changes: result.changes };
+  },
+
+  getTransactions : function(GetTransactionStatement, startdate, enddate) {
+    let tableRows = {
+      data:[]
+    };
+
+    console.log('Start date =', startdate);
+    console.log('end date =', enddate);
+
+    try {
+      for(let row of GetTransactionStatement.iterate(startdate, enddate)) {
+        tableRows.data.push({
+          buydate: row.buydate,
+          itemname: row.itemname,
+          class: row.class,
+          price: row.price,
+          quantity: row.quantity
+        });
+      }
+    }
+    catch(err) {
+      ErrorHandler(err,'getTransactions');
+    }
+    return tableRows.data;
   }
 }
 

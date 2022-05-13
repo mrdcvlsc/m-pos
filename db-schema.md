@@ -59,82 +59,25 @@
 
 ## queries
 
+- get current datetime.
+    ```sql
+    DATETIME()
+    OR
+    DATETIME('now')
+    ```
+
+- subtract (-) or add (+) from a date, you can also use the ```'now'``` as a date.
+    ```sql
+    DATETIME('2022-05-13T03:40:35.303Z', '+3 day', '-1 year', '-2 months', '+1 hour', '-2 minute', '+1 second');
+    ```
+
+- get all transactions between two dates
+    ```sql
+    SELECT * FROM transactions WHERE DATETIME(buydate) BETWEEN DATETIME(startdate) AND DATETIME(enddate)
+    ```
+    Note that the ```DATETIME``` function was just used here because we need the same date types for the conditions and column values. You can use any **sqlite3** date function modifier you want. If you can guarantee that the values are all just the same date type, then there is no need to use any date function modifier.
+
 - record a transaction ; example:
     ```sql
     INSERT INTO transactions (buydate, itemname, class, price, quantity) VALUES ('2021-02-05','regular jeans', 'clothes', 35, 7);
-    ```
-
-- get all transactions for the last 7 days
-    ```sql
-    select * from transactions where buydate > DATE_SUB(CURDATE(), INTERVAL 7 DAY);
-    ```
-
-- get all transactions for the last 30 days
-    ```sql
-    select * from transactions where buydate > DATE_SUB(CURDATE(), INTERVAL 30 DAY);
-    ```
-
-- get all transactions for the last 365 days
-    ```sql
-    select * from transactions where buydate > DATE_SUB(CURDATE(), INTERVAL 365 DAY);
-    ```
-
-- display all dates between two given dates
-    ```sql
-    select * from
-    (select adddate('1970-01-01',t4.i*10000 + t3.i*1000 + t2.i*100 + t1.i*10 +t0.i) selected_date from
-    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t0,
-    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t1,
-    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t2,
-    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t3,
-    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t4) v
-    where selected_date between '2012-02-10' and '2012-02-15';
-    ```
-
-- display all dates THE PAST 7 days
-    ```sql
-    select * from
-    (select adddate('1970-01-01',t4.i*10000 + t3.i*1000 + t2.i*100 + t1.i*10 +t0.i) selected_date from
-    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t0,
-    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t1,
-    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t2,
-    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t3,
-    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t4) v
-    where selected_date between DATE_SUB(CURDATE(), INTERVAL 7 DAY) and CURDATE();
-    ```
-
-- display all dates THE PAST 30 days
-    ```sql
-    select * from
-    (select adddate('1970-01-01',t4.i*10000 + t3.i*1000 + t2.i*100 + t1.i*10 +t0.i) selected_date from
-    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t0,
-    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t1,
-    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t2,
-    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t3,
-    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t4) v
-    where selected_date between DATE_SUB(CURDATE(), INTERVAL 30 DAY) and CURDATE();
-    ```
-
-- display all dates THE PAST 365 days
-    ```sql
-    select * from
-    (select adddate('1970-01-01',t4.i*10000 + t3.i*1000 + t2.i*100 + t1.i*10 +t0.i) selected_date from
-    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t0,
-    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t1,
-    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t2,
-    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t3,
-    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t4) v
-    where selected_date between DATE_SUB(CURDATE(), INTERVAL 364 DAY) and CURDATE();
-    ```
-
-- display 12 months
-    ```sql
-    select DATE_FORMAT(selected_date,'%y%m') from
-    (select adddate('1970-01-01',t4.i*10000 + t3.i*1000 + t2.i*100 + t1.i*10 +t0.i) selected_date from
-    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t0,
-    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t1,
-    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t2,
-    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t3,
-    (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t4) v
-    where selected_date between DATE_SUB(CURDATE(), INTERVAL 364 DAY) and CURDATE();
     ```
