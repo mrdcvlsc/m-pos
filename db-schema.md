@@ -53,6 +53,7 @@
 | :------: | :-------: | :------------: |
 | buydate  |   DATE    |    NOT NULL    |
 | itemname |   TEXT    |    NOT NULL    |
+|  class   |   TEXT    |    NOT NULL    |
 |  price   |   REAL    |    NOT NULL    |
 | quantity |  INTEGER  |    NOT NULL    |
 
@@ -60,7 +61,7 @@
 
 - record a transaction ; example:
     ```sql
-    INSERT INTO transactions (buydate, itemname, price, quantity) VALUES ('2021-02-05','regular jeans',35,7)
+    INSERT INTO transactions (buydate, itemname, class, price, quantity) VALUES ('2021-02-05','regular jeans', 'clothes', 35, 7);
     ```
 
 - get all transactions for the last 7 days

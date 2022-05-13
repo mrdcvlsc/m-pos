@@ -14,7 +14,8 @@ const InventoryDB = {
     DELETE : `DELETE FROM inventory WHERE itemname = ?`,
     UPDATE : `UPDATE inventory SET itemname = ?, class = ?, price = ?, quantity = ? WHERE itemname = ?`,
     ADDQUANTITY : `UPDATE inventory SET quantity = quantity + ? WHERE itemname = ?`,
-    SUBQUANTITY : `UPDATE inventory SET quantity = quantity - ? WHERE itemname = ?`
+    SUBQUANTITY : `UPDATE inventory SET quantity = quantity - ? WHERE itemname = ?`,
+    RECORDTRANSACTION : `INSERT INTO transactions (buydate, itemname, class, price, quantity) VALUES (?, ?, ?, ?, ?)`
   },
 
   initialize : function(db, inventoryName) {
@@ -39,8 +40,9 @@ const InventoryDB = {
     try{
       db.exec(`
         CREATE TABLE ${transactionTableName} (
-          buydata DATE NOT NULL,
+          buydate DATE NOT NULL,
           itemname TEXT NOT NULL,
+          class TEXT NOT NULL,
           price REAL NOT NULL,
           quantity INTEGER NOT NULL
         )`
