@@ -47,6 +47,8 @@ function ResetPanelB() {
   }
 
   InValTotalPrice.value = `₱${CurrentTotal}`;
+  InValPayment.value = '0';
+  InValChange.value = '₱0';
 
   CanBeSaved = false;
 }
@@ -185,7 +187,24 @@ document.querySelector('.sbtn').addEventListener('click', ()=> {
     alert('Calculate Change first');
   }
   else {
-    
+
+    let SaveDate = new Date().toISOString();
+    fetch(`/data/transactions/${SaveDate}`, {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'post',
+      body: JSON.stringify(BuyTable.data)
+    }).then(function (response) {
+      response.json().then(function (data) {
+        console.log(data);
+        BuyTable.data = [];
+        ResetPanelA();
+        ResetPanelB();
+      });
+    }).catch(function (error) {
+      console.error(error);
+    });
   }
 });
 

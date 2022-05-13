@@ -89,10 +89,6 @@ fetch('/data/inventory/Spandals&+SUPER-XXXLL', {
   console.error(error);
 });
 
-
-
-
-
 // TRANSACTIONS
 
 // POST

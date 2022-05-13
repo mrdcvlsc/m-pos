@@ -136,9 +136,8 @@ const SubQtyOption = {
 const RecordTransactionOption = {
   schema: {
     body: {
-      type: 'object',
-      required: ['buydate', 'itemname', 'class', 'price', 'quantity'],
-      properties: TransactItem.properties
+      type: 'array',
+      items: TransactItem
     },
     response: {
       201: {
@@ -173,7 +172,7 @@ async function api(fastify, options) {
   fastify.put('/data/inventory/add-qty/:itemname',AddQtyOption);
   fastify.put('/data/inventory/sub-qty/:itemname',SubQtyOption);
 
-  fastify.post('/data/transactions', RecordTransactionOption);
+  fastify.post('/data/transactions/:savedate', RecordTransactionOption);
   fastify.get ('/data/transactions/:startdate/:enddate', GetTransactionOption);
 }
 

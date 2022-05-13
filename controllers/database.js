@@ -147,16 +147,24 @@ const InventoryDB = {
     return { changes: result.changes };
   },
 
-  recordTransaction : function(rcrdTrnsctnStatement, BuyDate, Product, Class, Price, Quantity) {
-    let result;
+  recordTransaction : function(rcrdTrnsctnStatement, data, savedate) {
+    let TotalChanges = 0;
     try {
-      result = rcrdTrnsctnStatement.run(BuyDate, Product, Class, Price, Quantity);
+      for(let i=0; i<data.length; ++i) {
+        TotalChanges += rcrdTrnsctnStatement.run(
+          savedate,
+          data[i].itemname,
+          data[i].class,
+          data[i].price,
+          data[i].quantity
+        ).changes;
+      }
     }
     catch(err) {
       ErrorHandler(err,'recordTransaction');
       return { changes: 0 };
     }
-    return { changes: result.changes };
+    return { changes: TotalChanges };
   },
 
   getTransactions : function(GetTransactionStatement, startdate, enddate) {

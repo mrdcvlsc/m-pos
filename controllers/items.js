@@ -93,23 +93,14 @@ const subQuantity = (request, reply) => {
 }
 
 const recordTransactionInfo = (request, reply) => {
-  let item = request.body;
-  console.log('TRANSACTIONS - POST REQUEST :',item);
-  let queryResult = InventoryDB.recordTransaction(
-    recTrnStatement,
-    item.buydate,
-    item.itemname,
-    item.class,
-    item.price,
-    item.quantity
-  );
-  
+  let { savedate } = request.params;
+  let data = request.body;
+  let queryResult = InventoryDB.recordTransaction(recTrnStatement, data, savedate);
   reply.code(201).send(queryResult);
 }
 
 const getTransactionBetween = (request,reply) => {
   let date = request.params;
-  console.log('TRANSACTIONS - GET REQUEST :',date);
   let transactions = InventoryDB.getTransactions(
     getRecStatement,
     date.startdate,
