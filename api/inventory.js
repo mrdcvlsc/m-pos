@@ -2,7 +2,7 @@ const {
   getAllItems,  addItem,  deleteItem,   updateItem,
   addQuantity,  subQuantity,  recordTransactionInfo,
   getTransactionBetween
-} = require('../controllers/items');
+} = require('../controllers/database');
 
 const Item = {
   type: 'object',
