@@ -4,8 +4,6 @@ const {
   getTransactionBetween
 } = require('../controllers/items');
 
-let insertStatement, updateStatement, deleteStatement, readStatement;
-
 const Item = {
   type: 'object',
   properties: {
