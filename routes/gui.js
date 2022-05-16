@@ -13,6 +13,10 @@ async function routes (fastify, options)
   fastify.get('/gui/transaction', (req,rep)=>{
     rep.sendFile('html/transaction.html')
   });
+
+  fastify.get('/gui/visual', (req,rep)=>{
+    rep.sendFile('html/visual.html')
+  });
 }
 
 module.exports = routes;
