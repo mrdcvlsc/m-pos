@@ -70,7 +70,7 @@ class Table {
     }
   }
 
-  fillTable(data) {
+  fillTable(data,filterMatch=null) {
     this.data = data;
     try{
       // clear
@@ -92,7 +92,13 @@ class Table {
           tr.appendChild(td);
         }
   
-        this.tbody.appendChild(tr);
+        if(filterMatch) {
+          if(data[i].itemname.includes(filterMatch) || data[i].class.includes(filterMatch)) {
+            this.tbody.appendChild(tr);
+          }
+        } else {
+          this.tbody.appendChild(tr);
+        }
       }
     }
     catch(err){

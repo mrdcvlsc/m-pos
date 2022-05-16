@@ -12,13 +12,14 @@ let InventoryTable = new Table(document.getElementById("inventory"),['Products',
 let BuyTable       = new Table(document.getElementById("chosen")   ,['Products','Class','Price','Quantity']);
 
 var CanBeSaved = false;
+var filterMatch = null;
 
 async function LoadInventory() {
   let response = await fetch("/data/inventory");
   let data = await response.json();
 
   if(RefreshTable(InventoryTable.data,data)) {
-    InventoryTable.fillTable(data);
+    InventoryTable.fillTable(data,filterMatch);
     InventoryTable.enableSelection(InValSelectedItem);
   }
 }
@@ -27,7 +28,9 @@ LoadInventory();
 setInterval(LoadInventory,1600);
 
 function ResetPanelA() {
-  InventoryTable.fillTable(InventoryTable.data);
+  filterMatch = null;
+  
+  InventoryTable.fillTable(InventoryTable.data,filterMatch);
   InventoryTable.enableSelection(InValSelectedItem);
   InventoryTable.selected_tr = null;
 
@@ -60,8 +63,13 @@ document.getElementById('filter').addEventListener('input', ()=> {
     clearTimeout(Filter);
   }
   Filter = setTimeout(()=> {
-    // Filter Action
-  },1000);
+    filterMatch = InValFilter.value;
+    if(filterMatch==='') {
+      filterMatch = null;
+    }
+    InventoryTable.fillTable(InventoryTable.data,filterMatch);
+    InventoryTable.enableSelection(InValSelectedItem);
+  },600);
 });
 
 // Buying an Item
@@ -76,23 +84,30 @@ document.querySelector('.abtn').addEventListener('click', ()=> {
   }
   else {
     // Add Item Action
+    let FilteredData = InventoryTable.data;
+    if(filterMatch) {
+      FilteredData = FilteredData.filter((eobj) => {
+        return eobj.itemname.includes(filterMatch) || eobj.class.includes(filterMatch);
+      });
+    }
+
     let quantity = InValSelectedQuantity.value;
-    let DeductedQuantity = InventoryTable.data[InventoryTable.selected_index].quantity - quantity;
+    let DeductedQuantity = FilteredData[InventoryTable.selected_index].quantity - quantity;
     
     if(DeductedQuantity < 0) {
       alert('Not enough item');
     }
     else {
-      InventoryTable.data[InventoryTable.selected_index].quantity = DeductedQuantity;
+      FilteredData[InventoryTable.selected_index].quantity = DeductedQuantity;
       BuyTable.data.push({
-        "itemname": InventoryTable.data[InventoryTable.selected_index].itemname,
-        "class": InventoryTable.data[InventoryTable.selected_index].class,
-        "price": InventoryTable.data[InventoryTable.selected_index].price,
+        "itemname": FilteredData[InventoryTable.selected_index].itemname,
+        "class": FilteredData[InventoryTable.selected_index].class,
+        "price": FilteredData[InventoryTable.selected_index].price,
         "quantity": quantity
       });
       
       // subtract quantity to the database
-      fetch(`/data/inventory/sub-qty/${InventoryTable.data[InventoryTable.selected_index].itemname.replaceAll(' ','&+')}`, {
+      fetch(`/data/inventory/sub-qty/${FilteredData[InventoryTable.selected_index].itemname.replaceAll(' ','&+')}`, {
         headers: {
           'Content-Type': 'application/json'
         },
