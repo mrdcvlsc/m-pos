@@ -7,34 +7,35 @@
   <link rel="stylesheet" href="../css/globals.css">
   <link rel="stylesheet" href="../css/text.css">
   <link rel="stylesheet" href="../css/visual/layout.css">
+  <link rel="stylesheet" href="../css/gui-button.css">
+
+  <script src="../js/minify-charts.js"></script>
+  <script type="module" src="../js/visual.js" defer></script>
   <title>M.POS - Data Visualization</title>
 </head>
 <body>
 
-  <div class="dates">
+  <div class="options">
 
     <h2>Set Time Frame</h2>
 
-    <div>
-
+    <div class="dates">
       <div>
         <p>Starting Date</p>
-        <input type="date">
+        <input id="start" type="date">
       </div>
-
       <div>
         <p>End Date</p>
-        <input type="date">
+        <input id="end" type="date">
       </div>
-
     </div>
 
-    <button>Generate Visuals</button>
+    <button class="gbtn cgreen gn">Generate Visuals</button>
 
   </div>
 
-  <div class="reports">
-
+  <div class="report-container">
+    <div class="reports"></div>
   </div>
 
 </body>

@@ -6,8 +6,8 @@
 
 ```html
 <div class="gbtn cred"></div>
-<div class="gbtn green"></div>
-<div class="gbtn blue"></div>
+<div class="gbtn cgreen"></div>
+<div class="gbtn cblue"></div>
 ```
 
 - ```gbtn cred``` - for red buttons

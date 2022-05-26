@@ -1,7 +1,7 @@
 # Filters
 - Date time frame [inputs 2 : start date & end date]
-- Product Filters [2 modes : exclude & include]
-- Class Filters [2 modes : exclude & include]
+- Product Filters [2 modes  : exclude   &   include]
+- Class Filters   [2 modes  : exclude   &   include]
 
 # Pie graphs
 - sold product reveneu ratio
@@ -21,7 +21,6 @@
 - daily/monthly total sold product quantity
 
 # Key data
-
 - highest grossing product
 - lowest grossing product
 
