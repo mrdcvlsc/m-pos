@@ -8,6 +8,10 @@
     padding: 1em;
 }
 
+h2 {
+    color: white;
+}
+
 .dates {
     display: flex;
     gap: 1em;
@@ -17,6 +21,7 @@
 .report-container {
     display: flex;
     justify-content: center;
+    gap: 1em;
 }
 
 .reports {

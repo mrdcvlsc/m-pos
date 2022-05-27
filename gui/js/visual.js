@@ -16,7 +16,7 @@ async function GetTimeFrameData(StartDate, EndDate) {
   return data;
 }
 
-function PrintLine(canvas,labels,values,name='n/a') {
+function PrintLine(canvas,labels,values,name='n/a',LineColor = 'rgb(75, 192, 192)') {
   let LineChart = new Chart(canvas, {
     type: 'line',
     data : {
@@ -25,7 +25,7 @@ function PrintLine(canvas,labels,values,name='n/a') {
         label: name,
         data: values, // [65, 59, 80, 81, 56, 55, 40],
         fill: false,
-        borderColor: 'rgb(75, 192, 192)',
+        borderColor: LineColor,
         tension: 0.1
       }]
     }
@@ -36,10 +36,23 @@ function PrintLine(canvas,labels,values,name='n/a') {
 
 function PrintPie(canvas,products,quantities,title='N/A') {
   
+  let sum = 0;
+  for(let i=0; i<quantities.length; ++i) {
+    sum += quantities[i];
+  }
+
+  let ProductLabelWithPercentage = [];
+  for(let i=0; i<products.length; ++i) {
+    let LabeWithPercentage = parseFloat(`${quantities[i]/sum*100}`).toFixed(2);
+    ProductLabelWithPercentage.push(
+      `${products[i]} ${LabeWithPercentage}%`
+    );
+  }
+
   let PieChart = new Chart(canvas, {
     type: 'pie',
     data: {
-      labels: products,
+      labels: ProductLabelWithPercentage,
       datasets: [{
         data: quantities,
         backgroundColor: [
@@ -64,19 +77,6 @@ function PrintPie(canvas,products,quantities,title='N/A') {
         legend: {
           display: true
         },
-        datalabels: {
-          formatter: (value, ctx) => {
-            let sum = 0;
-            let dataArr = ctx.chart.data.datasets[0].data;
-            dataArr.map(data => {
-              sum += data;
-            });
-            let percentage = (value*100 / sum).toFixed(2)+"%";
-            return percentage;
-          },
-          color: '#fff',
-        }
-
       },
       responsive: true,
       maintainAspectRatio: false,
@@ -163,10 +163,10 @@ async function GenerateReports(data) {
   let LineContainerAmount = document.createElement('div');
   let LineContainerQuantity = document.createElement('div');
 
-  let PieTextQuantity = document.createElement('p');
-  let PieTextAmount = document.createElement('p');
-  let LineTextAmount = document.createElement('p');
-  let LineTextQuantity = document.createElement('p');
+  let PieTextQuantity = document.createElement('h2');
+  let PieTextAmount = document.createElement('h2');
+  let LineTextAmount = document.createElement('h2');
+  let LineTextQuantity = document.createElement('h2');
 
   PieTextQuantity.innerText = 'Sold Items Quantity Ratio';
   PieTextAmount.innerText = 'Sold Items Revenue Ratio';
@@ -178,10 +178,10 @@ async function GenerateReports(data) {
   LineContainerAmount.appendChild(CanvasLineDayAmount);
   LineContainerQuantity.appendChild(CanvasLineDayQuantity);
 
-  PrintPie(CanvasQuantity,products,quantity,'Quantity Sold');
-  PrintPie(CanvasTotals,products,totalAmount,'Product Revenu');
-  PrintLine(CanvasLineDayAmount,DatesBetween,LineAmountParsedValues,'Total Amount Sold');
-  PrintLine(CanvasLineDayQuantity,DatesBetween,LineQuantityParsedValues,'Total Quantity Sold');
+  PrintPie(CanvasQuantity,products,quantity,'Sold Quantity Ratio');
+  PrintPie(CanvasTotals,products,totalAmount,'Sales Revenue Ratio');
+  PrintLine(CanvasLineDayAmount,DatesBetween,LineAmountParsedValues,'Daily Revenue','rgb(225,86,96)');
+  PrintLine(CanvasLineDayQuantity,DatesBetween,LineQuantityParsedValues,'Daily Sold Quantity','rgb(109,255,67)');
 
   Reports.appendChild(PieTextQuantity);
   Reports.appendChild(PieContainerQuantity);
