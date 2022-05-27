@@ -49,3 +49,20 @@
   background-image: linear-gradient(45deg, rgb(0, 117, 10), rgb(3, 175, 32));
   border: 0.2em solid rgb(14, 71, 3);
 }
+
+.goback{
+  background-color: rgb(236, 41, 41);
+  border: medium solid white;
+  border-radius: 0.9em 0.9em 0.9em 0.9em;
+  padding: 0.2em;
+  text-align: center;
+}
+
+.goback:hover {
+  transform: scale(1.05);
+  -webkit-box-shadow: 0.4em 0.4em 0.2em rgba(0, 0, 0, 0.096), 0.2em 0.2em 0.2em rgba(0, 0, 0, 0.247);
+  -moz-box-shadow: 0.4em 0.4em 0.2em rgba(0, 0, 0, 0.096), 0.2em 0.2em 0.2em rgba(0, 0, 0, 0.247);
+  -ms-box-shadow: 0.4em 0.4em 0.2em rgba(0, 0, 0, 0.096), 0.2em 0.2em 0.2em rgba(0, 0, 0, 0.247);
+  -o-box-shadow: 0.4em 0.4em 0.2em rgba(0, 0, 0, 0.096), 0.2em 0.2em 0.2em rgba(0, 0, 0, 0.247);
+  box-shadow: 0.4em 0.4em 0.2em rgba(0, 0, 0, 0.096), 0.2em 0.2em 0.2em rgba(0, 0, 0, 0.247);
+}
