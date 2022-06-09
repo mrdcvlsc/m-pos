@@ -1,8 +1,12 @@
-const fastify = require('fastify')({logger:true});
+const fastify = require('fastify')({logger:false});
+// const fastify = require('fastify')({logger:true}); // for development
 const fastifyStatic = require('fastify-static');
 const path = require('path');
 
 const PORT = process.env.PORT || 8080;
+
+const os = require('os');
+const networkInterfaces = os.networkInterfaces();
 
 // serve static front-end resources
 fastify.register(fastifyStatic, {
@@ -21,3 +25,5 @@ const start = async () => {
   }
 }
 start();
+
+console.log(`\nwifi-network-server-ip: ${networkInterfaces.wlp2s0[0].address}:${PORT}\n`);

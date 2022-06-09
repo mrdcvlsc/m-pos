@@ -168,10 +168,64 @@ async function GenerateReports(data) {
   let LineTextAmount = document.createElement('h2');
   let LineTextQuantity = document.createElement('h2');
 
+  let MinQtySold = quantity[0];
+  let MinQtySoldProduct = products[0];
+  let MaxQtySold = quantity[0];
+  let MaxQtySoldProduct = products[0];
+
+  let MinRevenueSold = totalAmount[0];
+  let MinRevenueSoldProduct = products[0];
+  let MaxRevenueSold = totalAmount[0];
+  let MaxRevenueSoldProduct = products[0];
+
+  for(let i=0; i<products.length; ++i) {
+    if(quantity[i]<MinQtySold) {
+      MinQtySold = quantity[i];
+      MinQtySoldProduct = products[i];
+    }
+
+    if(quantity[i]>MaxQtySold) {
+      MaxQtySold = quantity[i];
+      MaxQtySoldProduct = products[i];
+    }
+
+    if(totalAmount[i]<MinRevenueSold) {
+      MinRevenueSold = totalAmount[i];
+      MinRevenueSoldProduct = products[i];
+    }
+
+    if(totalAmount[i]>MaxRevenueSold) {
+      MaxRevenueSold = totalAmount[i];
+      MaxRevenueSoldProduct = products[i];
+    }
+  }
+
+  let SummaryMsg = document.createElement('div');
+
   PieTextQuantity.innerText = 'Sold Items Quantity Ratio';
   PieTextAmount.innerText = 'Sold Items Revenue Ratio';
   LineTextAmount.innerText = 'Amount Daily Totals';
   LineTextQuantity.innerText = 'Quantity Daily Totals';
+  SummaryMsg.innerHTML =
+    `<br><br>
+    <h1>Sold Quantities</h2>
+    <p>The most sold product in quantity is ${MaxQtySoldProduct},
+    there are a total of ${MaxQtySold}x ${MaxQtySoldProduct} sold during the time period specified.</p>
+    
+    <p>On The other hand, the least sold product in quantity is ${MinQtySoldProduct},
+    there are only a total of ${MinQtySold}x ${MinQtySoldProduct} sold during the time period specified.</p>
+    
+    <h1>Product Revenues</h2>
+    <p>The product that have the biggest revenue is ${MaxRevenueSoldProduct}, during the time period specified
+    ${MaxRevenueSoldProduct} sold a total of ₱${MaxRevenueSold}.</p>
+    
+    <p>On the other hand, The product that have the smallest revenue is ${MinRevenueSoldProduct}, during the time period specified
+    ${MinRevenueSoldProduct} sold only a total of ₱${MinRevenueSold}.</p>`;
+
+  SummaryMsg.style.display = 'flex';
+  SummaryMsg.style.flexDirection = 'column';
+  SummaryMsg.style.gap = '0.8em';
+  SummaryMsg.style.padding = '1em';
 
   PieContainerQuantity.appendChild(CanvasQuantity);
   PieContainerAmount.appendChild(CanvasTotals);
@@ -194,6 +248,8 @@ async function GenerateReports(data) {
 
   Reports.appendChild(LineTextQuantity);
   Reports.appendChild(LineContainerQuantity);
+
+  Reports.appendChild(SummaryMsg);
 }
 
 function getDates(start_date, end_date) {
