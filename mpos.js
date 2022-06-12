@@ -30,6 +30,8 @@ if(typeof(networkInterfaces.wlp2s0) !== 'undefined') {
   console.log(`\napp-server-ip: ${networkInterfaces.wlp2s0[0].address}:${PORT}\\gui\\menu\n`);
 } else if(typeof(networkInterfaces['Wi-Fi'])!=='undefined') {
   console.log(`\napp-server-ip: ${networkInterfaces['Wi-Fi'][1].address}:${PORT}\\gui\\menu\n`);
+} else if(typeof(networkInterfaces.Ethernet) !== 'undefined') {
+  console.log(`\napp-server-ip: ${networkInterfaces.Ethernet.address}:${PORT}\\gui\\menu\n`);
 } else {
-  console.log('\nno IP detected');
+  console.log('\nno IP found for sharing over the network');
 }
