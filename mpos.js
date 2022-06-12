@@ -26,4 +26,10 @@ const start = async () => {
 }
 start();
 
-console.log(`\nwifi-network-server-ip: ${networkInterfaces.wlp2s0[0].address}:${PORT}\n`);
+if(typeof(networkInterfaces.wlp2s0) !== 'undefined') {
+  console.log(`\napp-server-ip: ${networkInterfaces.wlp2s0[0].address}:${PORT}\\gui\\menu\n`);
+} else if(typeof(networkInterfaces['Wi-Fi'])!=='undefined') {
+  console.log(`\napp-server-ip: ${networkInterfaces['Wi-Fi'][1].address}:${PORT}\\gui\\menu\n`);
+} else {
+  console.log('\nno IP detected');
+}
