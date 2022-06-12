@@ -1,0 +1,27 @@
+@media (max-width: 800px) {
+  .main {
+    display: flex;
+    flex-direction: column;
+
+    text-align: center;
+    height: 100vh;
+    width: 100vw;
+    padding: 1em;
+  }
+
+  .mbtn {
+    display: flex !important;
+  }
+
+  .tblc, .buy-table {
+    height: 50vh;
+  }
+
+  .buy-table{
+    display: none;
+  }
+
+  .panel2{
+    display: none;
+  }
+}

@@ -74,6 +74,10 @@
   padding: 0px !important;
 }
 
+.mbtn{
+  display: none !important;
+}
+
 .ro{
   background-color: rgb(207, 207, 207);
   border: 1px solid rgb(207, 207, 207);

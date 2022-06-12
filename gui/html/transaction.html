@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="../css/globals.css">
   <link rel="stylesheet" href="../css/text.css">
   <link rel="stylesheet" href="../css/transaction/layout.css">
+  <link rel="stylesheet" href="../css/transaction/mobile.css">
   <link rel="stylesheet" href="../css/inventory/table.css">
   <link rel="stylesheet" href="../css/gui-button.css">
 
@@ -16,7 +17,7 @@
 </head>
 <body>
   <div class="main">
-    <div class="tblc">
+    <div class="invtbl tblc">
       <h2>Available Products</h2>
       <table id="inventory">
         <thead></thead>
@@ -46,11 +47,14 @@
         </div>
   
         <div class="gbtn cgreen abtn"> Add Item</div>
-        <div class="gbtn cred rbtn"> Remove Item</div>
+        <div class="gbtn cblue mbtn nbtn"> Next</div>
       </div>
   
       <div class="panel2">
   
+        <div class="gbtn cred mbtn pbtn"> Previous</div>
+        <div class="gbtn cred rbtn"> Remove Item</div>
+
         <div class="indiv">
           <span class="inlbl">Total Price</span>
           <input class="in ro" id="total-price" value="₱0" readonly>

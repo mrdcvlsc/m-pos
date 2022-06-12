@@ -224,3 +224,23 @@ document.querySelector('.sbtn').addEventListener('click', ()=> {
 });
 
 BuyTable.data = [];
+
+// mobile buttons
+let TableContainer1 = document.querySelector('.invtbl');
+let TableContainer2 = document.querySelector('.buy-table');
+let Panel1 = document.querySelector('.panel1');
+let Panel2 = document.querySelector('.panel2');
+
+document.querySelector('.nbtn').addEventListener('click', function(){
+  TableContainer1.style.display = 'none';
+  TableContainer2.style.display = 'block';
+  Panel1.style.display = 'none';
+  Panel2.style.display = 'flex';
+});
+
+document.querySelector('.pbtn').addEventListener('click', function(){
+  TableContainer1.style.display = 'block';
+  TableContainer2.style.display = 'none';
+  Panel1.style.display = 'flex';
+  Panel2.style.display = 'none';
+});
