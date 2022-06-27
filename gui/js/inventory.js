@@ -143,6 +143,7 @@ addConfirm.addEventListener('click', event => {
     // send post request
     fetch('/data/inventory', {
       headers: {
+        'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       method: 'post',
@@ -203,7 +204,7 @@ editConfirm.addEventListener('click', event => {
     // send put request
     fetch(`/data/inventory/${InventoryTable.selection.itemname.replaceAll(' ','&+')}`, {
       headers: {
-        // 'Accept': 'application/json',
+        'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       method: 'put',
@@ -243,6 +244,7 @@ deleteConfirm.addEventListener('click', event => {
 
   fetch(`/data/inventory/${InventoryTable.selection.itemname.replaceAll(' ','&+')}`, {
     headers: {
+      'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
     method: 'delete'

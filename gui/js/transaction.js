@@ -109,6 +109,7 @@ document.querySelector('.abtn').addEventListener('click', ()=> {
       // subtract quantity to the database
       fetch(`/data/inventory/sub-qty/${FilteredData[InventoryTable.selected_index].itemname.replaceAll(' ','&+')}`, {
         headers: {
+          'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
         method: 'put',
@@ -139,6 +140,7 @@ document.querySelector('.rbtn').addEventListener('click', ()=> {
     // Re-Add the quantity in the database    
     fetch(`/data/inventory/add-qty/${BuyTable.data[BuyTable.selected_index].itemname.replaceAll(' ','&+')}`, {
       headers: {
+        'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       method: 'put',
@@ -206,6 +208,7 @@ document.querySelector('.sbtn').addEventListener('click', ()=> {
     let SaveDate = new Date().toISOString();
     fetch(`/data/transactions/${SaveDate}`, {
       headers: {
+        'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       method: 'post',
