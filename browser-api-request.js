@@ -1,7 +1,7 @@
 // POST
 fetch('/data/inventory', {
   headers: {
-    // 'Accept': 'application/json',
+    'Accept': 'application/json',
     'Content-Type': 'application/json'
   },
   method: 'post',
@@ -22,7 +22,7 @@ fetch('/data/inventory', {
 // UPDATE
 fetch('/data/inventory/Spandals&+SUPER-XXXL', {
   headers: {
-    // 'Accept': 'application/json',
+    'Accept': 'application/json',
     'Content-Type': 'application/json'
   },
   method: 'put',
@@ -43,6 +43,7 @@ fetch('/data/inventory/Spandals&+SUPER-XXXL', {
 // ADD QUANTITY
 fetch('/data/inventory/add-qty/Blue-Shirt', {
   headers: {
+    'Accept': 'application/json',
     'Content-Type': 'application/json'
   },
   method: 'put',
@@ -60,6 +61,7 @@ fetch('/data/inventory/add-qty/Blue-Shirt', {
 // SUB QUANTITY
 fetch('/data/inventory/sub-qty/Blue-Shirt', {
   headers: {
+    'Accept': 'application/json',
     'Content-Type': 'application/json'
   },
   method: 'put',
@@ -77,7 +79,7 @@ fetch('/data/inventory/sub-qty/Blue-Shirt', {
 // DELETE
 fetch('/data/inventory/Spandals&+SUPER-XXXLL', {
   headers: {
-    // 'Accept': 'application/json',
+    'Accept': 'application/json',
     'Content-Type': 'application/json'
   },
   method: 'delete'
@@ -94,7 +96,7 @@ fetch('/data/inventory/Spandals&+SUPER-XXXLL', {
 // POST
 fetch('/data/transactions', {
   headers: {
-    // 'Accept': 'application/json',
+    'Accept': 'application/json',
     'Content-Type': 'application/json'
   },
   method: 'post',

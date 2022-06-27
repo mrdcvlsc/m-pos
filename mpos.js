@@ -1,5 +1,4 @@
 const fastify = require('fastify')({logger:false});
-// const fastify = require('fastify')({logger:true}); // for development
 const fastifyStatic = require('fastify-static');
 const path = require('path');
 
