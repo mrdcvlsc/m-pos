@@ -36,3 +36,6 @@
 
 - [x] total quantity sold
 - [x] total sales revenue
+
+# Layout
+- [ ] redesign **Data Visualization** layout
