@@ -1,7 +1,7 @@
 {
   "name": "m-pos",
   "version": "1.0.0",
-  "description": "a minimal point of sale system for laptop, desktop and to some extent mobile phones",
+  "description": "a minimal point of sale system for laptop, desktop; extendable to smart phones by connecting to wifi",
   "main": "mpos.js",
   "scripts": {
     "start": "node mpos.js",
@@ -15,6 +15,6 @@
     "fastify-static": "^4.6.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.19"
   }
 }
