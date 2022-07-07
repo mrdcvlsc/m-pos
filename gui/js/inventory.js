@@ -119,7 +119,7 @@ const editCancle = document.querySelector(".edit1");
 const deleteConfirm = document.querySelector(".delete0");
 const deleteCancle = document.querySelector(".delete1");
 
-addConfirm.addEventListener('click', event => {
+addConfirm.addEventListener('click', async () => {
 
   let ItemNameInput = AddPopUp.querySelector("#add-itemname");
   let ClassInput = AddPopUp.querySelector("#add-class");
@@ -140,39 +140,40 @@ addConfirm.addEventListener('click', event => {
   }
   else { // requirements meet
 
-    // send post request
-    fetch('/data/inventory', {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      method: 'post',
-      body: JSON.stringify({
-        "itemname": ItemNameInput.value,
-        "class": ClassInput.value,
-        "price": PriceInput.value,
-        "quantity": QuantityInput.value
-      })
-    }).then(function (response) {
-      response.json().then(function (data) {
-        
-        console.log('ADD',data);
-
-        // clear fields
-        ItemNameInput.value = '';
-        ClassInput.value = '';
-        PriceInput.value = '';
-        QuantityInput.value = '';
-
-        // refresh the list
-        LoadInventory();
-
-        // close popup window
-        ClosePopUp(AddPopUp);
+    try {
+      // send post request
+      let response = await fetch('/data/inventory', {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: 'post',
+        body: JSON.stringify({
+          "itemname": ItemNameInput.value,
+          "class": ClassInput.value,
+          "price": PriceInput.value,
+          "quantity": QuantityInput.value
+        })
       });
-    }).catch(function (error) {
+      
+      let data = await response.json();
+      console.log('ADD',data);
+
+      // clear fields
+      ItemNameInput.value = '';
+      ClassInput.value = '';
+      PriceInput.value = '';
+      QuantityInput.value = '';
+
+      // refresh the list
+      LoadInventory();
+
+      // close popup window
+      ClosePopUp(AddPopUp);
+
+    } catch(error) {
       console.error('ERROR in : Add>Confirm>fetch()\n',error);
-    });
+    };
   }
 });
 
@@ -180,7 +181,7 @@ addCancle.addEventListener('click', event => {
   ClosePopUp(AddPopUp);
 });
 
-editConfirm.addEventListener('click', event => {
+editConfirm.addEventListener('click', async () => {
 
   let ItemNameInput = EditPopUp.querySelector("#edit-itemname");
   let ClassInput = EditPopUp.querySelector("#edit-class");
@@ -201,38 +202,41 @@ editConfirm.addEventListener('click', event => {
   }
   else { // requirements meet
 
-    // send put request
-    fetch(`/data/inventory/${InventoryTable.selection.itemname.replaceAll(' ','&+')}`, {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      method: 'put',
-      body: JSON.stringify({
-        "itemname": ItemNameInput.value,
-        "class": ClassInput.value,
-        "price": PriceInput.value,
-        "quantity": QuantityInput.value
-      })
-    }).then(function (response) {
-      response.json().then(function (data) {
-        console.log('EDIT',data);
-
-        // clear fields
-        ItemNameInput.value = '';
-        ClassInput.value = '';
-        PriceInput.value = '';
-        QuantityInput.value = '';
-
-        // refresh the list
-        LoadInventory();
-
-        // close popup window
-        ClosePopUp(EditPopUp);
+    try {
+      // send put request
+      let response = await fetch(`/data/inventory/${InventoryTable.selection.itemname.replaceAll(' ','&+')}`, {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: 'put',
+        body: JSON.stringify({
+          "itemname": ItemNameInput.value,
+          "class": ClassInput.value,
+          "price": PriceInput.value,
+          "quantity": QuantityInput.value
+        })
       });
-    }).catch(function (error) {
+      
+      let data = await response.json()
+
+      console.log('EDIT',data);
+
+      // clear fields
+      ItemNameInput.value = '';
+      ClassInput.value = '';
+      PriceInput.value = '';
+      QuantityInput.value = '';
+
+      // refresh the list
+      LoadInventory();
+
+      // close popup window
+      ClosePopUp(EditPopUp);
+    
+    } catch(error) {
       console.error('ERROR in : Edit>Confirm>fetch()\n',error);
-    }); 
+    }; 
   }
 });
 
@@ -240,27 +244,29 @@ editCancle.addEventListener('click', event => {
   ClosePopUp(EditPopUp);
 });
 
-deleteConfirm.addEventListener('click', event => {
+deleteConfirm.addEventListener('click', async () => {
 
-  fetch(`/data/inventory/${InventoryTable.selection.itemname.replaceAll(' ','&+')}`, {
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    method: 'delete'
-  }).then(function (response) {
-    response.json().then(function (data) {
-      console.log('DELETE',data);
-
-      // refresh the list
-      LoadInventory();
-
-      // close popup window
-      ClosePopUp(DeletePopUp);
+  try {
+    let response = await fetch(`/data/inventory/${InventoryTable.selection.itemname.replaceAll(' ','&+')}`, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'delete'
     });
-  }).catch(function (error) {
+    
+    let data = await response.json();
+    console.log('DELETE',data);
+
+    // refresh the list
+    LoadInventory();
+
+    // close popup window
+    ClosePopUp(DeletePopUp);
+
+  } catch(error) {
     console.error('ERROR in : Delete>Confirm>fetch()\n',error);
-  });
+  };
 });
 
 deleteCancle.addEventListener('click', event => {

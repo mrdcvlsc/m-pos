@@ -73,7 +73,7 @@ document.getElementById('filter').addEventListener('input', ()=> {
 });
 
 // Buying an Item
-document.querySelector('.abtn').addEventListener('click', ()=> {
+document.querySelector('.abtn').addEventListener('click', async ()=> {
   if(!InventoryTable.selected_tr) {
     alert('Select an Item First in the Available Products Table');
   }
@@ -106,60 +106,63 @@ document.querySelector('.abtn').addEventListener('click', ()=> {
         "quantity": quantity
       });
       
-      // subtract quantity to the database
-      fetch(`/data/inventory/sub-qty/${FilteredData[InventoryTable.selected_index].itemname.replaceAll(' ','&+')}`, {
+      try {
+        // subtract quantity to the database
+        let response = await fetch(`/data/inventory/sub-qty/${FilteredData[InventoryTable.selected_index].itemname.replaceAll(' ','&+')}`, {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          method: 'put',
+          body: JSON.stringify({
+            "quantity": quantity
+          })
+        });
+        
+        let data = await response.json();
+        
+        console.log('Transaction Quantity Subtracted',data);
+
+        // rerender tables
+        ResetPanelA();
+        ResetPanelB();
+
+      } catch(error) {
+        console.error('ERROR in : transaction>subtract item quantity>fetch()\n',error);
+      };
+    }
+  }
+});
+
+// Removing an Item
+document.querySelector('.rbtn').addEventListener('click', async ()=> {
+  if(!BuyTable.selected_tr) {
+    alert('Select an Item First to be Removed in the Products to be Sold Table');
+  }
+  else {
+    try {
+      // Re-Add the quantity in the database    
+      let response = await fetch(`/data/inventory/add-qty/${BuyTable.data[BuyTable.selected_index].itemname.replaceAll(' ','&+')}`, {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
         method: 'put',
         body: JSON.stringify({
-          "quantity": quantity
+          "quantity": BuyTable.data[BuyTable.selected_index].quantity
         })
-      }).then(function (response) {
-        response.json().then(function (data) {
-          console.log('Transaction Quantity Subtracted',data);
-
-          // rerender tables
-          ResetPanelA();
-          ResetPanelB();
-        });
-      }).catch(function (error) {
-        console.error('ERROR in : transaction>subtract item quantity>fetch()\n',error);
       });
-    }
-  }
-});
+      
+      let data = await response.json();
+      console.log('Transaction Quantity Readded',data);
 
-// Removing an Item
-document.querySelector('.rbtn').addEventListener('click', ()=> {
-  if(!BuyTable.selected_tr) {
-    alert('Select an Item First to be Removed in the Products to be Sold Table');
-  }
-  else {
-    // Re-Add the quantity in the database    
-    fetch(`/data/inventory/add-qty/${BuyTable.data[BuyTable.selected_index].itemname.replaceAll(' ','&+')}`, {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      method: 'put',
-      body: JSON.stringify({
-        "quantity": BuyTable.data[BuyTable.selected_index].quantity
-      })
-    }).then(function (response) {
-      response.json().then(function (data) {
-        console.log('Transaction Quantity Readded',data);
-
-        // rerender tables
-        ResetPanelA();
-
-        BuyTable.data.splice(BuyTable.selected_index,1);
-        ResetPanelB();
-      });
-    }).catch(function (error) {
+      // rerender tables
+      ResetPanelA();
+      BuyTable.data.splice(BuyTable.selected_index,1);
+      ResetPanelB();
+    } catch(error) {
       console.error('ERROR in : transaction>re-add item quantity>fetch()\n',error);
-    });
+    };
   }
 });
 
@@ -196,7 +199,7 @@ document.querySelector('.cbtn').addEventListener('click', ()=> {
 });
 
 // Save Transactions
-document.querySelector('.sbtn').addEventListener('click', ()=> {
+document.querySelector('.sbtn').addEventListener('click', async ()=> {
   if(BuyTable.data.length<=0) {
     alert('No products in the "Products To be Sold" table : Add a product first');
   }
@@ -206,23 +209,26 @@ document.querySelector('.sbtn').addEventListener('click', ()=> {
   else {
 
     let SaveDate = new Date().toISOString();
-    fetch(`/data/transactions/${SaveDate}`, {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      method: 'post',
-      body: JSON.stringify(BuyTable.data)
-    }).then(function (response) {
-      response.json().then(function (data) {
-        console.log(data);
-        BuyTable.data = [];
-        ResetPanelA();
-        ResetPanelB();
+
+    try {
+      let response = await fetch(`/data/transactions/${SaveDate}`, {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: 'post',
+        body: JSON.stringify(BuyTable.data)
       });
-    }).catch(function (error) {
+      
+      let data = await response.json();
+      console.log(data);
+      BuyTable.data = [];
+      ResetPanelA();
+      ResetPanelB();
+      
+    } catch(error) {
       console.error(error);
-    });
+    };
   }
 });
 
