@@ -3,7 +3,7 @@
 
 # Filters
 - [x] Date time frame (daily) [inputs 2 : start date & end date]
-- [ x] Date time frame (monthly) [inputs 2 : start date & end date]
+- [x] Date time frame (monthly) [inputs 2 : start date & end date]
 - [ ] Product Filters [2 modes  : exclude   &   include]
 - [ ] Class Filters   [2 modes  : exclude   &   include]
 
