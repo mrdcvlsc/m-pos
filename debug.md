@@ -1,1 +1,2 @@
-# cannot delete inventory items what has '?' at the end? in their itemname.
+- [ ] cannot delete inventory items that has '`?`' at the end? of their itemname.
+- [ ] finish transaction menu to prevent the problem where if user have added an item to the **Products to be Sold** table, and they quit from the transaction menu without saving the transaction, the quantity data will be lost.
