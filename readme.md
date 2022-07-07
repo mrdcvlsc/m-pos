@@ -8,9 +8,11 @@ The frontend was created using vanila html, css, and javascript, it supports mob
 
 Here is a demo deployed in heroku.
 
-[See Demo](#)
+[See Demo](https://minimalist-pos-demo.herokuapp.com/)
 
-Input test data for demo [See Test Data](test-data.md)
+https://minimalist-pos-demo.herokuapp.com/
+
+Input test data for demo [Click Here - See Test Data](test-data.md)
 
 ------
 
