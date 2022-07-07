@@ -1,5 +1,5 @@
 # Inventory
-- [ ] Add product image
+- [ ] Add functionality to add a product image.
 
 # Filters
 - [x] Date time frame (daily) [inputs 2 : start date & end date]
