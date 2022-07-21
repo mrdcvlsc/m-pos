@@ -1,26 +1,23 @@
-const path = require('path');
-
-async function routes (fastify, options)
-{
-  fastify.get('/gui/inventory', (req,rep)=>{
+async function routes (fastify, options) {
+  fastify.get('/gui/inventory', (req, rep) => {
     rep.sendFile('html/inventory.html')
-  });
+  })
 
-  fastify.get('/gui/menu', (req,rep)=>{
+  fastify.get('/gui/menu', (req, rep) => {
     rep.sendFile('html/menu.html')
-  });
+  })
 
-  fastify.get('/gui/transaction', (req,rep)=>{
+  fastify.get('/gui/transaction', (req, rep) => {
     rep.sendFile('html/transaction.html')
-  });
+  })
 
-  fastify.get('/gui/visual', (req,rep)=>{
+  fastify.get('/gui/visual', (req, rep) => {
     rep.sendFile('html/visual.html')
-  });
+  })
 
   fastify.setNotFoundHandler((req, res) => {
-    res.redirect('/gui/menu');
-  });
+    res.redirect('/gui/menu')
+  })
 }
 
-module.exports = routes;
+module.exports = routes

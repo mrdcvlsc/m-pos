@@ -1,8 +1,8 @@
 const {
-  getAllItems,  addItem,  deleteItem,   updateItem,
-  addQuantity,  subQuantity,  recordTransactionInfo,
+  getAllItems, addItem, deleteItem, updateItem,
+  addQuantity, subQuantity, recordTransactionInfo,
   getTransactionBetween
-} = require('../controllers/database');
+} = require('../controllers/database')
 
 const Item = {
   type: 'object',
@@ -161,17 +161,17 @@ const GetTransactionOption = {
   handler: getTransactionBetween
 }
 
-async function api(fastify, options) {
-  fastify.get('/data/inventory', RetreiveInventory);
-  fastify.post('/data/inventory', PostItemOption);
-  fastify.delete('/data/inventory/:itemname', DeleteItemOption);
-  fastify.put('/data/inventory/:itemname', UpdateItemOption);
-  
-  fastify.put('/data/inventory/add-qty/:itemname',AddQtyOption);
-  fastify.put('/data/inventory/sub-qty/:itemname',SubQtyOption);
+async function api (fastify, options) {
+  fastify.get('/data/inventory', RetreiveInventory)
+  fastify.post('/data/inventory', PostItemOption)
+  fastify.delete('/data/inventory/:itemname', DeleteItemOption)
+  fastify.put('/data/inventory/:itemname', UpdateItemOption)
 
-  fastify.post('/data/transactions/:savedate', RecordTransactionOption);
-  fastify.get ('/data/transactions/:startdate/:enddate', GetTransactionOption);
+  fastify.put('/data/inventory/add-qty/:itemname', AddQtyOption)
+  fastify.put('/data/inventory/sub-qty/:itemname', SubQtyOption)
+
+  fastify.post('/data/transactions/:savedate', RecordTransactionOption)
+  fastify.get('/data/transactions/:startdate/:enddate', GetTransactionOption)
 }
 
-module.exports = api;
+module.exports = api
