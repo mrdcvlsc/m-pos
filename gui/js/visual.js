@@ -250,17 +250,16 @@ async function GenerateReports (data) {
   Reports.appendChild(SummaryMsg)
 }
 
-function getDates (startDate, endDate) {
-  const dateRange = []
-  let stDate = new Date(startDate)
-  while (stDate <= endDate) {
-    const month = ('0' + (stDate.getMonth() + 1)).slice(-2)
-    const day = ('0' + stDate.getDate()).slice(-2)
-    const date = [stDate.getFullYear(), month, day].join('-')
-    dateRange.push(date)
-    stDate = stDate.setDate(stDate.getDate() + 1)
+function getDates (start, end) {
+  const dates = []
+  while (start.getTime() <= end.getTime()) {
+    const month = ('0' + (start.getMonth() + 1)).slice(-2)
+    const day = ('0' + start.getDate()).slice(-2)
+    const date = [start.getFullYear(), month, day].join('-')
+    dates.push(date)
+    start.setDate(start.getDate() + 1)
   }
-  return dateRange
+  return dates
 }
 
 function formatDateYearMonthDay (date) {
