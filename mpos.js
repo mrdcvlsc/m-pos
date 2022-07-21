@@ -1,5 +1,5 @@
-const fastify = require('fastify')({ logger: false })
-const fastifyStatic = require('fastify-static')
+const fastify = require('fastify')({ logger: true })
+const fastifyStatic = require('@fastify/static')
 const path = require('path')
 
 const PORT = process.env.PORT || 8080
@@ -17,7 +17,7 @@ fastify.register(require('./routes/gui'))
 
 const start = async () => {
   try {
-    await fastify.listen(PORT, '::')
+    await fastify.listen({ port: PORT, host: '::' })
   } catch (err) {
     fastify.log.error(err)
     process.exit(1)

@@ -143,7 +143,7 @@ function PrintPie (canvas, data) {
   const products = data.map(item => item.itemname)
   const quantities = data.map(item => item.quantity)
 
-  const PieChart = new Chart(canvas, {
+  const PieChart = new Chart(canvas, { // eslint-disable-line
     type: 'pie',
     data: {
       labels: products,

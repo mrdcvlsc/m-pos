@@ -32,7 +32,7 @@ function ResetPanelA () {
 
   InventoryTable.fillTable(InventoryTable.data, filterMatch)
   InventoryTable.enableSelection(InValSelectedItem)
-  InventoryTable.selected_tr = null
+  InventoryTable.trSelected = null
 
   InValFilter.value = ''
   InValSelectedItem.value = 'None'
@@ -42,7 +42,7 @@ function ResetPanelA () {
 function ResetPanelB () {
   BuyTable.fillTable(BuyTable.data)
   BuyTable.enableSelection()
-  BuyTable.selected_tr = null
+  BuyTable.trSelected = null
 
   let CurrentTotal = 0
   for (let i = 0; i < BuyTable.data.length; ++i) {
@@ -74,7 +74,7 @@ document.getElementById('filter').addEventListener('input', () => {
 
 // Buying an Item
 document.querySelector('.abtn').addEventListener('click', async () => {
-  if (!InventoryTable.selected_tr) {
+  if (!InventoryTable.trSelected) {
     window.alert('Select an Item First in the Available Products Table')
   } else if (
     InValSelectedQuantity.value === '0' ||
@@ -90,22 +90,22 @@ document.querySelector('.abtn').addEventListener('click', async () => {
     }
 
     const quantity = InValSelectedQuantity.value
-    const DeductedQuantity = FilteredData[InventoryTable.selected_index].quantity - quantity
+    const DeductedQuantity = FilteredData[InventoryTable.selectedIndex].quantity - quantity
 
     if (DeductedQuantity < 0) {
       window.alert('Not enough item')
     } else {
-      FilteredData[InventoryTable.selected_index].quantity = DeductedQuantity
+      FilteredData[InventoryTable.selectedIndex].quantity = DeductedQuantity
       BuyTable.data.push({
-        itemname: FilteredData[InventoryTable.selected_index].itemname,
-        class: FilteredData[InventoryTable.selected_index].class,
-        price: FilteredData[InventoryTable.selected_index].price,
+        itemname: FilteredData[InventoryTable.selectedIndex].itemname,
+        class: FilteredData[InventoryTable.selectedIndex].class,
+        price: FilteredData[InventoryTable.selectedIndex].price,
         quantity
       })
 
       try {
         // subtract quantity to the database
-        const response = await fetch(`/data/inventory/sub-qty/${FilteredData[InventoryTable.selected_index].itemname.replaceAll(' ', '&+')}`, {
+        const response = await fetch(`/data/inventory/sub-qty/${FilteredData[InventoryTable.selectedIndex].itemname.replaceAll(' ', '&+')}`, {
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json'
@@ -130,19 +130,19 @@ document.querySelector('.abtn').addEventListener('click', async () => {
 
 // Removing an Item
 document.querySelector('.rbtn').addEventListener('click', async () => {
-  if (!BuyTable.selected_tr) {
+  if (!BuyTable.trSelected) {
     window.alert('Select an Item First to be Removed in the Products to be Sold Table')
   } else {
     try {
       // Re-Add the quantity in the database
-      const response = await fetch(`/data/inventory/add-qty/${BuyTable.data[BuyTable.selected_index].itemname.replaceAll(' ', '&+')}`, {
+      const response = await fetch(`/data/inventory/add-qty/${BuyTable.data[BuyTable.selectedIndex].itemname.replaceAll(' ', '&+')}`, {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json'
         },
         method: 'put',
         body: JSON.stringify({
-          quantity: BuyTable.data[BuyTable.selected_index].quantity
+          quantity: BuyTable.data[BuyTable.selectedIndex].quantity
         })
       })
 
@@ -151,7 +151,7 @@ document.querySelector('.rbtn').addEventListener('click', async () => {
 
       // rerender tables
       ResetPanelA()
-      BuyTable.data.splice(BuyTable.selected_index, 1)
+      BuyTable.data.splice(BuyTable.selectedIndex, 1)
       ResetPanelB()
     } catch (error) {
       console.error('ERROR in : transaction>re-add item quantity>fetch()\n', error)

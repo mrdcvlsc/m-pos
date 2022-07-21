@@ -17,7 +17,7 @@ async function GetTimeFrameData (StartDate, EndDate) {
 }
 
 function PrintLine (canvas, labels, values, name = 'n/a', LineColor = 'rgb(75, 192, 192)') {
-  const LineChart = new Chart(canvas, {
+  const LineChart = new Chart(canvas, { // eslint-disable-line
     type: 'line',
     data: {
       labels, // ['m','t','w','th','f','s','s'],
@@ -48,7 +48,7 @@ function PrintPie (canvas, products, quantities, title = 'N/A') {
     )
   }
 
-  const PieChart = new Chart(canvas, {
+  const PieChart = new Chart(canvas, { // eslint-disable-line
     type: 'pie',
     data: {
       labels: ProductLabelWithPercentage,

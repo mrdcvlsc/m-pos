@@ -62,9 +62,9 @@ function ClosePopUp (ShowPopUpBox) {
   SelectedItemname.value = 'None'
 
   try {
-    InventoryTable.selected_tr.style.backgroundColor = ''
-    InventoryTable.selected_tr.style.color = ''
-    InventoryTable.selected_tr.style.outline = ''
+    InventoryTable.trSelected.style.backgroundColor = ''
+    InventoryTable.trSelected.style.color = ''
+    InventoryTable.trSelected.style.outline = ''
   } catch (err) {
     console.log('ClosePopUp() : No rows selected yet to be clear')
   }
