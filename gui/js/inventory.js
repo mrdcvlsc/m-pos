@@ -230,7 +230,7 @@ deleteConfirm.addEventListener('click', async () => {
     const response = await fetch(`/data/inventory/${InventoryTable.selection.itemname.replaceAll(' ', '&+')}`, {
       headers: {
         Accept: 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'text/plain'
       },
       method: 'delete'
     })
