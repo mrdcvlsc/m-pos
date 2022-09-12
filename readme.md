@@ -12,6 +12,8 @@ Here is a demo deployed in heroku.
 
 [See Demo](https://minimalist-pos-demo.herokuapp.com/)
 
+![demo-of-web-app-gif](gui/img/m-pos-demo-video.gif)
+
 https://minimalist-pos-demo.herokuapp.com/
 
 Input test data for demo [Click Here - See Test Data](test-data.md)
