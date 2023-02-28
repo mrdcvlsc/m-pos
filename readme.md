@@ -8,13 +8,7 @@ The frontend was created using vanilla HTML, CSS, and JavaScript, it supports mo
 
 **Demo**
 
-Here is a demo deployed in Heroku.
-
-[See Demo](https://minimalist-pos-demo.herokuapp.com/)
-
 ![demo-of-web-app-gif](gui/img/m-pos-demo-video.gif)
-
-https://minimalist-pos-demo.herokuapp.com/
 
 Input test data for demo [Click Here - See Test Data](test-data.md)
 

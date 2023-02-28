@@ -11,12 +11,12 @@
   "author": "Mordecai Velasco",
   "license": "MIT",
   "dependencies": {
-    "@fastify/static": "^6.4.0",
-    "better-sqlite3": "^7.6.2",
-    "fastify": "^4.2.1"
+    "@fastify/static": "^6.9.0",
+    "better-sqlite3": "^8.1.0",
+    "fastify": "^4.13.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.19",
+    "nodemon": "^2.0.20",
     "standard": "^17.0.0"
   }
 }
