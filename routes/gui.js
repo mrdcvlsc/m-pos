@@ -14,10 +14,6 @@ async function routes (fastify, options) {
   fastify.get('/gui/visual', (req, rep) => {
     rep.sendFile('html/visual.html')
   })
-
-  fastify.setNotFoundHandler((req, res) => {
-    res.redirect('/gui/menu')
-  })
 }
 
 module.exports = routes

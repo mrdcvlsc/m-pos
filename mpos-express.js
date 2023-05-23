@@ -1,5 +1,5 @@
-const fastify = require('fastify')({ logger: true })
-const fastifyStatic = require('@fastify/static')
+const express = require('express')
+const app = express()
 const path = require('path')
 
 const PORT = process.env.PORT || 8080
@@ -8,26 +8,18 @@ const os = require('os')
 const networkInterfaces = os.networkInterfaces()
 
 // serve static front-end resources
-fastify.register(fastifyStatic, {
-  root: path.join(__dirname, 'gui')
-})
+app.use(express.static('gui'));
 
-fastify.register(require('./api/actions'))
-fastify.register(require('./routes/gui'))
+app.use('/data', require('./api-express/actions'))
+app.use('/gui', require('./routes/gui-express'))
 
-fastify.setNotFoundHandler((req, res) => {
+app.get('*', (req, res) => {
   res.redirect('/gui/menu')
-})
+});
 
-const start = async () => {
-  try {
-    await fastify.listen({ port: PORT, host: '::' })
-  } catch (err) {
-    fastify.log.error(err)
-    process.exit(1)
-  }
-}
-start()
+app.listen(PORT, () => {
+  console.log(`Express server started on port ${PORT}`)
+})
 
 if (typeof networkInterfaces.wlp2s0 !== 'undefined') {
   console.log(`\n(a) app-server-ip: ${networkInterfaces.wlp2s0[0].address}:${PORT}/gui/menu\n`)

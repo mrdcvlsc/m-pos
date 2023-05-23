@@ -5,6 +5,7 @@
   "main": "mpos.js",
   "scripts": {
     "start": "node mpos.js",
+    "start-express": "node mpos-express.js",
     "dev": "nodemon mpos.js",
     "lint": "npx standard *.js ./api/*.js ./controllers/*.js ./routes/*.js ./gui/js/inventory.js ./gui/js/transaction.js ./gui/js/visual.js ./gui/js/table.js"
   },
@@ -13,6 +14,7 @@
   "dependencies": {
     "@fastify/static": "^6.9.0",
     "better-sqlite3": "^8.1.0",
+    "express": "^4.18.2",
     "fastify": "^4.13.0"
   },
   "devDependencies": {
