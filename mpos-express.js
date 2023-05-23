@@ -7,6 +7,10 @@ const PORT = process.env.PORT || 8080
 const os = require('os')
 const networkInterfaces = os.networkInterfaces()
 
+// enable express.js to parse json data
+const bodyParser = require('body-parser')
+app.use(bodyParser.json())
+
 // serve static front-end resources
 app.use(express.static('gui'));
 
