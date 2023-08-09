@@ -17,4 +17,12 @@ routes.get('/visual', (req, rep) => {
   rep.sendFile('html/visual.html', { root: './gui' })
 })
 
+routes.get('/stats', (req, rep) => {
+  rep.sendFile('dashboard/index.html', { root: './gui' })
+})
+
+routes.get('/chess', (req, rep) => {
+  rep.sendFile('chessboard/index.html', { root: './gui' })
+})
+
 module.exports = routes;
