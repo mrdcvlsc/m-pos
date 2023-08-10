@@ -8,6 +8,8 @@ The frontend was created using vanilla HTML, CSS, and JavaScript, it supports mo
 
 **Demo**
 
+[**Live App Demo**](https://minimalist-point-of-sales-information.onrender.com) - https://minimalist-point-of-sales-information.onrender.com
+
 ![demo-of-web-app-gif](gui/img/m-pos-demo-video.gif)
 
 Input test data for demo [Click Here - See Test Data](test-data.md)

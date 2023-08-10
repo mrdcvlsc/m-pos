@@ -1,6 +1,6 @@
 {
   "name": "m-pos",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "a minimal point of sale system for laptop, desktop; extendable to smart phones by connecting to wifi",
   "main": "mpos.js",
   "scripts": {
